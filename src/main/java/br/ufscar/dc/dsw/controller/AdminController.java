@@ -34,7 +34,7 @@ public class AdminController extends HttpServlet {
 
 		if (usuario == null) {
 			response.sendRedirect(request.getContextPath());
-		} else if (usuario.getPapel().equals("ADMIN")) {
+		} else if (usuario.getTipo().equals("ADMIN")) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher(
 					"/logado/admin/index.jsp");
 			dispatcher.forward(request, response);

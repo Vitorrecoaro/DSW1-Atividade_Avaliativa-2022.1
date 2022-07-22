@@ -1,24 +1,22 @@
 package br.ufscar.dc.dsw.domain;
 
-import java.math.BigInteger;
-
 public class Veiculo {
 
-    private static BigInteger veic_id;
+    private int veic_id;
     private String veic_placa;
     private String veic_loja_CNPJ;
     private String veic_modelo;
     private String veic_chassi;
     private int veic_ano;
-    private BigInteger veic_quilometragem;
+    private float veic_quilometragem;
     private String veic_descricao;
-    private double veic_valor;
+    private float veic_valor;
     private String veic_fotos;
 
     public Veiculo(
-            BigInteger id, String placa, String CNPJ, String modelo,
-            String chassi, int ano, BigInteger quilometragem,
-            String descricao, double valor, String fotos) {
+            int id, String placa, String CNPJ, String modelo,
+            String chassi, int ano, float quilometragem,
+            String descricao, float valor, String fotos) {
 
         if (placa.length() == 7 && CNPJ.length() == 14) {
             this.veic_placa = placa;
@@ -33,7 +31,7 @@ public class Veiculo {
         }
     }
 
-    public BigInteger getId() {
+    public int getId() {
         return veic_id;
     }
 
@@ -79,11 +77,11 @@ public class Veiculo {
         return veic_ano;
     }
 
-    public void setQuilometragem(BigInteger quilometragem) {
+    public void setQuilometragem(float quilometragem) {
         this.veic_quilometragem = quilometragem;
     }
 
-    public BigInteger getQuilometragem() {
+    public float getQuilometragem() {
         return this.veic_quilometragem;
     }
 
@@ -99,7 +97,7 @@ public class Veiculo {
     // this.veic_valor = valor;
     // }
 
-    public double getValor() {
+    public float getValor() {
         return this.veic_valor;
     }
 

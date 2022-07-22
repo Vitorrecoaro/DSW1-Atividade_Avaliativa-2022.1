@@ -1,44 +1,44 @@
 package br.ufscar.dc.dsw.domain;
 
-import java.math.BigInteger;
-import java.time.LocalDate;
+import java.sql.Date;
 
 public class Proposta {
-    private static int id;
-    private Usuario user;
-    private Veiculo veic;
-    private LocalDate data;
-    private String valor;
+    private int id;
+    private String user_cpf;
+    private String veic_placa;
+    private Date data;
+    private float valor;
     private String status;
-    private Loja loja_responsavel;
+    private String CNPJ_loja_responsavel;
 
-    public Proposta(Usuario user, Veiculo veic, LocalDate data,
-            String valor, String status, Loja loja) {
-        this.user = user;
-        this.veic = veic;
+    public Proposta(int id, String CPF, String veic_placa, Date data,
+            float valor, String status, String loja) {
+        this.id = id;
+        this.user_cpf = CPF;
+        this.veic_placa = veic_placa;
         this.data = data;
         this.valor = valor;
         this.status = status;
-        this.loja_responsavel = loja;
+        this.CNPJ_loja_responsavel = loja;
     }
 
     public int getId() {
         return id;
     }
 
-    public Usuario getUser() {
-        return user;
+    public String getUserCPF() {
+        return user_cpf;
     }
 
-    public Veiculo getVeic() {
-        return veic;
+    public String getVeicPlaca() {
+        return veic_placa;
     }
 
-    public LocalDate getData() {
+    public Date getData() {
         return data;
     }
 
-    public String getValor() {
+    public float getValor() {
         return valor;
     }
 
@@ -46,7 +46,7 @@ public class Proposta {
         return status;
     }
 
-    public Loja getLoja() {
-        return loja_responsavel;
+    public String getLojaCNPJ() {
+        return CNPJ_loja_responsavel;
     }
 }

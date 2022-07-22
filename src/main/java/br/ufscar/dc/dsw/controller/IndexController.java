@@ -13,11 +13,11 @@ import br.ufscar.dc.dsw.dao.UsuarioDAO;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.util.Erro;
 
-@WebServlet(name = "Index", urlPatterns = { "/index.jsp", "/logout.jsp" })
+@WebServlet(name = "Index", urlPatterns = { "/index.jsp", "/logout" })
 public class IndexController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -42,7 +42,7 @@ public class IndexController extends HttpServlet {
 				if (usuario != null) {
 					if (usuario.getSenha().equals(senha)) {
 						request.getSession().setAttribute("usuarioLogado", usuario);
-						if (usuario.getPapel().equals("ADMIN")) {
+						if (usuario.getTipo().equals("ADMIN")) {
 							response.sendRedirect("admin/");
 						} else {
 							response.sendRedirect("usuario/");
