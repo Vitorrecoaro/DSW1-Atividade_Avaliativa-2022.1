@@ -1,7 +1,5 @@
 package br.ufscar.dc.dsw.domain;
 
-import java.math.BigInteger;
-
 public class Loja {
 
     private Long id;
@@ -15,6 +13,17 @@ public class Loja {
             String nome, String descricao) {
         if (CNPJ.length() == 14) {
             this.id = id;
+            this.CNPJ = CNPJ;
+            this.email = email;
+            this.senha = senha;
+            this.nome = nome;
+            this.descricao = descricao;
+        }
+    }
+
+    public Loja(String CNPJ, String email, String senha,
+            String nome, String descricao) {
+        if (CNPJ.length() == 14) {
             this.CNPJ = CNPJ;
             this.email = email;
             this.senha = senha;

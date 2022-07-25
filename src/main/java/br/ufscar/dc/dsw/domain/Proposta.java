@@ -22,6 +22,16 @@ public class Proposta {
         this.CNPJ_loja_responsavel = loja;
     }
 
+    public Proposta(String CPF, String veic_placa, Date data,
+            float valor, String status, String loja) {
+        this.user_cpf = CPF;
+        this.veic_placa = veic_placa;
+        this.data = data;
+        this.valor = valor;
+        this.status = status;
+        this.CNPJ_loja_responsavel = loja;
+    }
+
     public Long getId() {
         return id;
     }

@@ -19,6 +19,25 @@ public class Veiculo {
             String descricao, float valor, String fotos) {
 
         if (placa.length() == 7 && CNPJ.length() == 14) {
+            this.id = id;
+            this.veic_placa = placa;
+            this.veic_loja_CNPJ = CNPJ;
+            this.veic_modelo = modelo;
+            this.veic_chassi = chassi;
+            this.veic_ano = ano;
+            this.veic_quilometragem = quilometragem;
+            this.veic_descricao = descricao;
+            this.veic_valor = valor;
+            this.veic_fotos = fotos;
+        }
+    }
+
+    public Veiculo(
+            String placa, String CNPJ, String modelo,
+            String chassi, int ano, float quilometragem,
+            String descricao, float valor, String fotos) {
+
+        if (placa.length() == 7 && CNPJ.length() == 14) {
             this.veic_placa = placa;
             this.veic_loja_CNPJ = CNPJ;
             this.veic_modelo = modelo;
