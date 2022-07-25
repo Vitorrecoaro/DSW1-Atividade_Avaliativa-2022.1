@@ -2,7 +2,7 @@ package br.ufscar.dc.dsw.domain;
 
 public class Veiculo {
 
-    private int veic_id;
+    private Long id;
     private String veic_placa;
     private String veic_loja_CNPJ;
     private String veic_modelo;
@@ -14,7 +14,7 @@ public class Veiculo {
     private String veic_fotos;
 
     public Veiculo(
-            int id, String placa, String CNPJ, String modelo,
+            Long id, String placa, String CNPJ, String modelo,
             String chassi, int ano, float quilometragem,
             String descricao, float valor, String fotos) {
 
@@ -31,8 +31,8 @@ public class Veiculo {
         }
     }
 
-    public int getId() {
-        return veic_id;
+    public Long getId() {
+        return id;
     }
 
     public String getPlaca() {

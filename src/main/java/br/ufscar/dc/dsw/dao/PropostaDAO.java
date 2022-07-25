@@ -22,7 +22,7 @@ public class PropostaDAO extends GenericDAO {
             ;
 
             statement = conn.prepareStatement(sql);
-            statement.setInt(1, proposta.getId());
+            statement.setLong(1, proposta.getId());
             statement.setString(2, proposta.getUserCPF());
             statement.setString(3, proposta.getVeicPlaca());
             statement.setDate(4, proposta.getData());
@@ -50,7 +50,7 @@ public class PropostaDAO extends GenericDAO {
 
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                int id = resultSet.getInt("prop_id");
+                Long id = resultSet.getLong("prop_id");
                 String CPF = resultSet.getString("prop_user_CPF");
                 String placa = resultSet.getString("prop_veic_placa");
                 Date data = resultSet.getDate("prop_data");
@@ -101,7 +101,7 @@ public class PropostaDAO extends GenericDAO {
             statement.setFloat(4, proposta.getValor());
             statement.setString(5, proposta.getStatus());
             statement.setString(6, proposta.getLojaCNPJ());
-            statement.setInt(7, proposta.getId());
+            statement.setLong(7, proposta.getId());
             statement.executeUpdate();
 
             statement.close();
@@ -111,7 +111,7 @@ public class PropostaDAO extends GenericDAO {
         }
     }
 
-    public Proposta getbyID(int id) {
+    public Proposta getbyID(Long id) {
         Proposta proposta = null;
 
         String sql = "SELECT * from PROPOSTA WHERE prop_id = ?";
@@ -120,7 +120,7 @@ public class PropostaDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String CPF = resultSet.getString("prop_user_CPF");
@@ -154,7 +154,7 @@ public class PropostaDAO extends GenericDAO {
             statement.setString(1, placa);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                int id = resultSet.getInt("prop_id");
+                Long id = resultSet.getLong("prop_id");
                 String CPF = resultSet.getString("prop_user_CPF");
                 Date data = resultSet.getDate("prop_data");
                 float valor = resultSet.getFloat("prop_valor");

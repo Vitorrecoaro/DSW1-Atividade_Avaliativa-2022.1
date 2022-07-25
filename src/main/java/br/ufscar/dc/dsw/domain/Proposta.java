@@ -3,7 +3,7 @@ package br.ufscar.dc.dsw.domain;
 import java.sql.Date;
 
 public class Proposta {
-    private int id;
+    private Long id;
     private String user_cpf;
     private String veic_placa;
     private Date data;
@@ -11,7 +11,7 @@ public class Proposta {
     private String status;
     private String CNPJ_loja_responsavel;
 
-    public Proposta(int id, String CPF, String veic_placa, Date data,
+    public Proposta(Long id, String CPF, String veic_placa, Date data,
             float valor, String status, String loja) {
         this.id = id;
         this.user_cpf = CPF;
@@ -22,7 +22,7 @@ public class Proposta {
         this.CNPJ_loja_responsavel = loja;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

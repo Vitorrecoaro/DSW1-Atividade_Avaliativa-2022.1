@@ -13,12 +13,12 @@
             <p>Olá ${sessionScope.usuarioLogado.nome}</p>
             <ul>
                 <li>
-                    <a href="${pageContext.request.contextPath}/logout">Sair</a>
+                    <a href="${pageContext.request.contextPath}/admin/cadastro">
+                        Cadastrar usuários
+                    </a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/cadastro_loja.jsp">
-                        Cadastrar loja
-                    </a>
+                    <a href="${pageContext.request.contextPath}/logout">Sair</a>
                 </li>
             </ul>
         </body>

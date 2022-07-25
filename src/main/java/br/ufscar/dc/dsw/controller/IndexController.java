@@ -14,6 +14,7 @@ import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.util.Erro;
 
 @WebServlet(name = "Index", urlPatterns = { "/index.jsp", "/logout" })
+
 public class IndexController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

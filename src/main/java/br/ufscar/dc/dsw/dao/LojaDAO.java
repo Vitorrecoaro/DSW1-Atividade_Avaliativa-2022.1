@@ -22,7 +22,7 @@ public class LojaDAO extends GenericDAO {
             ;
 
             statement = conn.prepareStatement(sql);
-            statement.setInt(1, loja.getId());
+            statement.setLong(1, loja.getId());
             statement.setString(2, loja.getCNPJ());
             statement.setString(3, loja.getEmail());
             statement.setString(4, loja.getSenha());
@@ -49,7 +49,7 @@ public class LojaDAO extends GenericDAO {
 
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                int id = resultSet.getInt("loja_id");
+                Long id = resultSet.getLong("loja_id");
                 String CNPJ = resultSet.getString("loja_CNPJ");
                 String email = resultSet.getString("loja_email");
                 String senha = resultSet.getString("loja_senha");
@@ -97,7 +97,7 @@ public class LojaDAO extends GenericDAO {
             statement.setString(3, loja.getSenha());
             statement.setString(4, loja.getNome());
             statement.setString(5, loja.getDescricao());
-            statement.setInt(6, loja.getId());
+            statement.setLong(6, loja.getId());
             statement.executeUpdate();
 
             statement.close();
@@ -107,7 +107,7 @@ public class LojaDAO extends GenericDAO {
         }
     }
 
-    public Loja getbyID(int id) {
+    public Loja getbyID(Long id) {
         Loja loja = null;
 
         String sql = "SELECT * from LOJA WHERE loja_id = ?";
@@ -116,7 +116,7 @@ public class LojaDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String CNPJ = resultSet.getString("loja_CNPJ");
@@ -149,7 +149,7 @@ public class LojaDAO extends GenericDAO {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                int id = resultSet.getInt("loja_id");
+                Long id = resultSet.getLong("loja_id");
                 String CNPJ = resultSet.getString("loja_CNPJ");
                 String senha = resultSet.getString("loja_senha");
                 String nome = resultSet.getString("loja_nome");
