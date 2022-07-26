@@ -11,30 +11,34 @@
 
         <body>
 
-            <form method="post" action="novoUsuario" class="formulario">
+            <c:set var="usuario" value="requestScope.usuario" />
+
+            <form method="post" action="atualizaUsuario?user_id=${usuario.getId()}" class="formulario">
                 <fieldset>
-                    <legend>Cadastro do usuário</legend>
+                    <legend>Edição de usuário</legend>
 
                     <label>E-mail
-                        <input required id="email" type="email" name="email" placeholder="askopdasdkops@gmail.com" />
+                        <input required id="email" type="email" name="email" placeholder="askopdasdkops@gmail.com"
+                            value="${usuario.getEmail()}" />
                     </label>
 
                     <label>Senha
-                        <input required id="senha" type="password" name="senha" />
+                        <input required id="senha" type="password" name="senha" value="${usuario.getSenha()}" />
                     </label>
 
                     <label>CPF
                         <input required id="cpf" type="text" name="cpf" placeholder="XXXXXXXXX-XX" maxlength="11"
+                            value="${usuario.getCPF()}"
                             onkeypress="if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;">
                     </label>
 
                     <label>Nome
-                        <input required id="nome" type="text" name="nome">
+                        <input required id="nome" type="text" name="nome" value="${usuario.getNome()}">
                     </label>
 
                     <label>Telefone
                         <input required id="telefone" type="tel" name="telefone" placeholder="(XX)XXXXX-XX"
-                            maxlength="11"
+                            maxlength="11" value="${usuario.getTelefone()}"
                             onkeypress="if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;">
                     </label>
 
@@ -46,11 +50,20 @@
                     </label>
 
                     <label>Data de Nascimento
-                        <input required id="nascimento" type="date" name="dataNascimento">
+                        <input required id="nascimento" type="date" name="dataNascimento"
+                            value="${usuario.getDataNasc()}">
+                    </label>
+
+                    <label>
+                        Tipo
+                        <select required id="tipo" name="tipo">
+                            <option value="USER">Usuário</option>
+                            <option value="ADMIN">Administrador</option>
+                        </select>
                     </label>
 
                     <button type="submit" id="botao">
-                        Cadastrar
+                        Editar
                 </fieldset>
                 </button>
             </form>

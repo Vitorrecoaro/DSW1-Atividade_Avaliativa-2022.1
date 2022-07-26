@@ -2,7 +2,6 @@ package br.ufscar.dc.dsw.controller;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ufscar.dc.dsw.dao.LojaDAO;
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
+import br.ufscar.dc.dsw.domain.Loja;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.util.Erro;
 
@@ -42,28 +43,28 @@ public class AdminController extends HttpServlet {
 			if (action == null) {
 				action = "";
 			}
-
 			try {
 				switch (action) {
-					case "/cadastro":
+					case "/cadastroUsuario":
 						formCadastroUser(request, response);
 						break;
-					case "/user/cadastro":
+					case "/novoUsuario":
 						cadastraUser(request, response);
 						break;
-					case "/user/remove":
+					case "/removeUsuario":
 						removeUser(request, response);
 						break;
 					case "/atualizacao":
 						formAtualizacaoUser(request, response);
 						break;
-					case "/user/atualizacao":
+					case "/atualizaUsuario":
 						updateUser(request, response);
 						break;
+					case "/cadastroLoja":
+						formCadastraLoja(request, response);
+						break;
 					default:
-						RequestDispatcher dispatcher = request.getRequestDispatcher(
-								"/logado/admin/index.jsp");
-						dispatcher.forward(request, response);
+						listaLojasUsuarios(request, response);
 						break;
 				}
 			} catch (RuntimeException | IOException | ServletException e) {
@@ -80,6 +81,25 @@ public class AdminController extends HttpServlet {
 		}
 	}
 
+	private void listaLojasUsuarios(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		LojaDAO daoLojas = new LojaDAO();
+		UsuarioDAO daoUsers = new UsuarioDAO();
+		List<Usuario> listaUsuarios = daoUsers.getAll();
+		List<Loja> listaLojas = daoLojas.getAll();
+		request.setAttribute("listaUsuarios", listaUsuarios);
+		request.setAttribute("listaLojas", listaLojas);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/painelAdministrativo.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	private void formCadastraLoja(HttpServletRequest request,
+			HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/formCadastroLoja.jsp");
+		dispatcher.forward(request, response);
+	}
+
 	private void formCadastroUser(HttpServletRequest request,
 			HttpServletResponse response)
 			throws ServletException, IOException {
@@ -91,7 +111,6 @@ public class AdminController extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String cpf = request.getParameter("cpf");
-		String login = request.getParameter("login");
 		String nome = request.getParameter("nome");
 		String email = request.getParameter("email");
 		String senha = request.getParameter("senha");
@@ -101,15 +120,9 @@ public class AdminController extends HttpServlet {
 		if (tipo == null || tipo.equals("")) {
 			tipo = "USER";
 		}
-		Date dataNascimento = Date.valueOf(LocalDate.now());
+		Date dataNascimento = Date.valueOf(request.getParameter("dataNascimento"));
 		try {
-			dataNascimento = Date.valueOf(LocalDate.parse(request.getParameter("dataNascimento")));
-		} catch (Exception e) {
-			dataNascimento = Date.valueOf(LocalDate.now());
-		}
-
-		try {
-			Usuario usuario = new Usuario(nome, login, senha, email, cpf,
+			Usuario usuario = new Usuario(nome, senha, email, cpf,
 					telefone, sexo, dataNascimento, tipo);
 			UsuarioDAO dao = new UsuarioDAO();
 			dao.insert(usuario);
@@ -119,168 +132,70 @@ public class AdminController extends HttpServlet {
 
 			request.setAttribute("mensagens", erros);
 
-			RequestDispatcher rd = request.getRequestDispatcher("/usuario/formCadastro.jsp");
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/admin/cadastroUsuario");
 			rd.forward(request, response);
 		}
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+		RequestDispatcher dispatcher = request
+				.getRequestDispatcher("/admin");
 		dispatcher.forward(request, response);
 	}
 
 	private void removeUser(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Erro erros = new Erro();
-		Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
-
-		if (usuarioLogado == null) {
-			erros.add("Precisa estar logado para acessar essa página.");
-
-			request.setAttribute("mensagens", erros);
-			String URL = "/login.jsp";
-			RequestDispatcher rd = request.getRequestDispatcher(URL);
-			rd.forward(request, response);
-			return;
-		} else if (!usuarioLogado.getTipo().equals("ADMIN")) {
-			erros.add("Não possui permissão de acesso.");
-			erros.add("Apenas [ADMIN] pode acessar essa página.");
-
-			request.setAttribute("mensagens", erros);
-			String URL = "/noAuth.jsp";
-			RequestDispatcher rd = request.getRequestDispatcher(URL);
-			rd.forward(request, response);
-			return;
-		}
 
 		Long id = Long.parseLong(request.getParameter("user_id"));
 		UsuarioDAO dao = new UsuarioDAO();
 		Usuario usuario = dao.getbyID(id);
 		dao.delete(usuario);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("usuario");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("admin");
 		dispatcher.forward(request, response);
 
 	}
 
 	private void formAtualizacaoUser(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Erro erros = new Erro();
-		Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
-
-		if (usuarioLogado == null) {
-			erros.add("Precisa estar logado para acessar essa página.");
-
-			request.setAttribute("mensagens", erros);
-			String URL = "/login.jsp";
-			RequestDispatcher rd = request.getRequestDispatcher(URL);
-			rd.forward(request, response);
-			return;
-		} else if (!usuarioLogado.getTipo().equals("ADMIN")) {
-			erros.add("Não possui permissão de acesso.");
-			erros.add("Apenas [ADMIN] pode acessar essa página.");
-
-			request.setAttribute("mensagens", erros);
-			String URL = "/noAuth.jsp";
-			RequestDispatcher rd = request.getRequestDispatcher(URL);
-			rd.forward(request, response);
-			return;
-		}
 
 		request.setCharacterEncoding("UTF-8");
 		Long id = Long.parseLong(request.getParameter("user_id"));
 		UsuarioDAO dao = new UsuarioDAO();
 		Usuario usuario = dao.getbyID(id);
 		request.setAttribute("usuario", usuario);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/usuario/formEdicao.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/admin/formEdicaoUser.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	private void updateUser(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Erro erros = new Erro();
-		Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
-
-		if (usuarioLogado == null) {
-			erros.add("Precisa estar logado para acessar essa página.");
-
-			request.setAttribute("mensagens", erros);
-			String URL = "/login.jsp";
-			RequestDispatcher rd = request.getRequestDispatcher(URL);
-			rd.forward(request, response);
-			return;
-		} else if (!usuarioLogado.getTipo().equals("ADMIN")) {
-			erros.add("Não possui permissão de acesso.");
-			erros.add("Apenas [ADMIN] pode acessar essa página.");
-
-			request.setAttribute("mensagens", erros);
-			String URL = "/noAuth.jsp";
-			RequestDispatcher rd = request.getRequestDispatcher(URL);
-			rd.forward(request, response);
-			return;
-		}
-
 		request.setCharacterEncoding("UTF-8");
-
 		Long id = Long.parseLong(request.getParameter("user_id"));
 		UsuarioDAO dao = new UsuarioDAO();
-		Usuario usuario = dao.getbyID(id);
 
-		String CPF = request.getParameter("CPF");
-		if (CPF == "") {
-			CPF = usuario.getCPF();
-		}
-
-		String login = request.getParameter("login");
-		if (login == "") {
-			login = usuario.getLogin();
-		}
-
+		String CPF = request.getParameter("cpf");
 		String nome = request.getParameter("nome");
-		if (nome == "") {
-			nome = usuario.getNome();
-		}
 		String email = request.getParameter("email");
-		if (email == "") {
-			email = usuario.getEmail();
-		}
 		String senha = request.getParameter("senha");
-		if (senha == "") {
-			senha = usuario.getSenha();
-		}
 		char sexo = request.getParameter("sexo").charAt(0);
-		if (sexo == '\0' || sexo == ' ') {
-			sexo = usuario.getSexo();
-		}
-
 		String telefone = request.getParameter("telefone");
-		if (telefone == "") {
-			telefone = usuario.getTelefone();
-		}
-
 		String tipo = request.getParameter("tipo");
-		if (tipo == "") {
-			tipo = usuario.getTipo();
-
-			Date dataNascimento = usuario.getDataNasc();
-			try {
-				dataNascimento = Date.valueOf(LocalDate.parse(request.getParameter("dataNascimento")));
-			} catch (Exception e) {
-				dataNascimento = usuario.getDataNasc();
-			}
-
-			Usuario usuarioAtualizado = new Usuario(nome, login, senha,
-					email, CPF, telefone, sexo, dataNascimento, tipo);
-			try {
-				dao.update(usuarioAtualizado);
-			} catch (Exception e) {
-				erros.add("Erro nos dados preenchidos.");
-
-				request.setAttribute("mensagens", erros);
-
-				RequestDispatcher rd = request.getRequestDispatcher("/usuario/formEdicao.jsp");
-				rd.forward(request, response);
-			}
-
-			RequestDispatcher dispatcher = request.getRequestDispatcher("clientes");
-			dispatcher.forward(request, response);
+		Date dataNascimento = Date.valueOf(request.getParameter("dataNascimento"));
+		Usuario usuario = dao.getbyID(id);
+		Usuario usuarioAtualizado = new Usuario(usuario.getId(), nome, senha,
+				email, CPF, telefone, sexo, dataNascimento, tipo);
+		try {
+			dao.update(usuarioAtualizado);
+		} catch (Exception e) {
+			erros.add("Erro nos dados preenchidos.");
+			request.setAttribute("mensagens", erros);
+			request.setAttribute("usuario", usuario);
+			request.setAttribute("user_id", id);
+			RequestDispatcher rd = request.getRequestDispatcher("/logado/admin/formEdicaoUser.jsp");
+			rd.forward(request, response);
 		}
+		response.sendRedirect("/leilao_veiculos/admin");
+		// RequestDispatcher dispatcher = request.getRequestDispatcher("/admin");
+		// dispatcher.forward(request, response);
 	}
 }

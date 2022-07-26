@@ -7,7 +7,6 @@ public class Usuario {
 
 	private Long id;
 	private String nome;
-	private String login;
 	private String senha;
 	private String email;
 	private String CPF;
@@ -17,11 +16,9 @@ public class Usuario {
 	private String tipo_de_usuario;
 
 	public Usuario(
-			String nome, String login, String senha, String email,
+			String nome, String senha, String email,
 			String CPF, String telefone, char sexo, Date nasc, String tipo) {
-		super();
 		this.nome = nome;
-		this.login = login;
 		this.senha = senha;
 		this.email = email;
 		this.CPF = CPF;
@@ -32,12 +29,11 @@ public class Usuario {
 	}
 
 	public Usuario(
-			Long id, String nome, String login, String senha, String email,
+			Long id, String nome, String senha, String email,
 			String CPF, String telefone, char sexo, Date nasc, String tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.login = login;
 		this.senha = senha;
 		this.email = email;
 		this.CPF = CPF;
@@ -57,14 +53,6 @@ public class Usuario {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
 	}
 
 	public String getSenha() {

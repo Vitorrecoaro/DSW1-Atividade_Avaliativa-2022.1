@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.ufscar.dc.dsw.domain.Usuario;
+import br.ufscar.dc.dsw.domain.Loja;
 import br.ufscar.dc.dsw.util.Erro;
 
 @WebServlet(urlPatterns = "/loja/*")
@@ -36,23 +36,44 @@ public class LojaController extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
 
-        Usuario usuario = (Usuario) request.getSession()
+        Loja loja = (Loja) request.getSession()
                 .getAttribute("usuarioLogado");
         Erro erros = new Erro();
 
-        if (usuario == null) {
+        if (loja == null) {
             response.sendRedirect(request.getContextPath());
-        } else if (usuario.getTipo().equals("ADMIN")) {
-            RequestDispatcher dispatcher = request
-                    .getRequestDispatcher("/logado/usuario/index.jsp");
-            dispatcher.forward(request, response);
         } else {
-            erros.add("Acesso não autorizado!");
-            erros.add("Apenas Papel [USER] tem acesso a essa página");
-            request.setAttribute("mensagens", erros);
-            RequestDispatcher rd = request
-                    .getRequestDispatcher("/noAuth.jsp");
-            rd.forward(request, response);
+            String action = request.getPathInfo();
+            if (action == null) {
+                action = "";
+            }
+
+            try {
+                switch (action) {
+                    case "/cadastro":
+                        formCadastroVeiculo(request, response);
+                        break;
+                    case "/veiculo/cadastro":
+                        // cadastraUser(request, response);
+                        break;
+                    default:
+                        RequestDispatcher dispatcher = request
+                                .getRequestDispatcher(
+                                        "/logado/loja/index.jsp");
+                        dispatcher.forward(request, response);
+                        break;
+                }
+            } catch (RuntimeException | IOException | ServletException e) {
+                throw new ServletException(e);
+            }
         }
+    }
+
+    private void formCadastroVeiculo(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request
+                .getRequestDispatcher(
+                        "/logado/loja/formCadastroVeiculo.jsp");
+        dispatcher.forward(request, response);
     }
 }
