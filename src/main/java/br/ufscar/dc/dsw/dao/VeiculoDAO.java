@@ -21,7 +21,7 @@ public class VeiculoDAO extends GenericDAO {
             ;
 
             statement = conn.prepareStatement(sql);
-            statement.setInt(1, veiculo.getId());
+            statement.setLong(1, veiculo.getId());
             statement.setString(2, veiculo.getPlaca());
             statement.setString(3, veiculo.getCNPJ());
             statement.setString(4, veiculo.getModelo());
@@ -52,7 +52,7 @@ public class VeiculoDAO extends GenericDAO {
 
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                int id = resultSet.getInt("veic_id");
+                Long id = resultSet.getLong("veic_id");
                 String placa = resultSet.getString("veic_placa");
                 String CNPJ = resultSet.getString("veic_loja_CNPJ");
                 String modelo = resultSet.getString("veic_modelo");
@@ -104,12 +104,12 @@ public class VeiculoDAO extends GenericDAO {
             statement.setString(2, veiculo.getCNPJ());
             statement.setString(3, veiculo.getModelo());
             statement.setString(4, veiculo.getChassi());
-            statement.setInt(5, veiculo.getAno());
+            statement.setLong(5, veiculo.getAno());
             statement.setFloat(6, veiculo.getQuilometragem());
             statement.setString(7, veiculo.getDescricao());
             statement.setFloat(8, veiculo.getValor());
             statement.setString(9, veiculo.getFoto());
-            statement.setInt(10, veiculo.getId());
+            statement.setLong(10, veiculo.getId());
             statement.executeUpdate();
 
             statement.close();
@@ -119,7 +119,7 @@ public class VeiculoDAO extends GenericDAO {
         }
     }
 
-    public Veiculo getbyID(int id) {
+    public Veiculo getbyID(Long id) {
         Veiculo veiculo = null;
 
         String sql = "SELECT * from VEICULO WHERE veic_id = ?";
@@ -128,7 +128,7 @@ public class VeiculoDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String placa = resultSet.getString("veic_placa");
@@ -166,7 +166,7 @@ public class VeiculoDAO extends GenericDAO {
             statement.setString(1, placa);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                int id = resultSet.getInt("veic_id");
+                Long id = resultSet.getLong("veic_id");
                 String CNPJ = resultSet.getString("veic_loja_CNPJ");
                 String modelo = resultSet.getString("veic_modelo");
                 String chassi = resultSet.getString("veic_chassi");

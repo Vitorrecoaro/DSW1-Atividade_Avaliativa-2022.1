@@ -14,6 +14,7 @@ import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.util.Erro;
 
 @WebServlet(name = "Index", urlPatterns = { "/index.jsp", "/logout" })
+
 public class IndexController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -38,7 +39,7 @@ public class IndexController extends HttpServlet {
 			}
 			if (!erros.isExisteErros()) {
 				UsuarioDAO dao = new UsuarioDAO();
-				Usuario usuario = dao.getbyLogin(login);
+				Usuario usuario = dao.getbyEmail(login);
 				if (usuario != null) {
 					if (usuario.getSenha().equals(senha)) {
 						request.getSession().setAttribute("usuarioLogado", usuario);

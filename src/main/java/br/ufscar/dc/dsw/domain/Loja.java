@@ -1,14 +1,15 @@
 package br.ufscar.dc.dsw.domain;
 
 public class Loja {
-    private int id;
+
+    private Long id;
     private String CNPJ;
     private String email;
     private String senha;
     private String nome;
     private String descricao;
 
-    public Loja(int id, String CNPJ, String email, String senha,
+    public Loja(Long id, String CNPJ, String email, String senha,
             String nome, String descricao) {
         if (CNPJ.length() == 14) {
             this.id = id;
@@ -20,7 +21,18 @@ public class Loja {
         }
     }
 
-    public int getId() {
+    public Loja(String CNPJ, String email, String senha,
+            String nome, String descricao) {
+        if (CNPJ.length() == 14) {
+            this.CNPJ = CNPJ;
+            this.email = email;
+            this.senha = senha;
+            this.nome = nome;
+            this.descricao = descricao;
+        }
+    }
+
+    public Long getId() {
         return id;
     }
 
