@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.ufscar.dc.dsw.domain.Loja;
+import br.ufscar.dc.dsw.domain.Usuario;
 
 public class LojaDAO extends GenericDAO {
 
     public void insert(Loja loja) {
 
-        String sql = "INSERT INTO LOJA VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO LOJA(loja_CNPJ, loja_email, loja_descricao) VALUES (?, ?, ?)";
 
         try {
             Connection conn = this.getConnection();
@@ -22,12 +23,9 @@ public class LojaDAO extends GenericDAO {
             ;
 
             statement = conn.prepareStatement(sql);
-            statement.setLong(1, loja.getId());
-            statement.setString(2, loja.getCNPJ());
-            statement.setString(3, loja.getEmail());
-            statement.setString(4, loja.getSenha());
-            statement.setString(5, loja.getNome());
-            statement.setString(6, loja.getDescricao());
+            statement.setString(1, loja.getCNPJ());
+            statement.setString(2, loja.getEmail());
+            statement.setString(3, loja.getDescricao());
             statement.executeUpdate();
 
             statement.close();
@@ -49,14 +47,13 @@ public class LojaDAO extends GenericDAO {
 
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
+                UsuarioDAO usuarioDao = new UsuarioDAO();
                 Long id = resultSet.getLong("loja_id");
                 String CNPJ = resultSet.getString("loja_CNPJ");
                 String email = resultSet.getString("loja_email");
-                String senha = resultSet.getString("loja_senha");
-                String nome = resultSet.getString("loja_nome");
                 String descricao = resultSet.getString("loja_descricao");
-                Loja loja = new Loja(id, CNPJ,
-                        email, senha, nome, descricao);
+                Usuario user = usuarioDao.getbyEmail(email);
+                Loja loja = new Loja(id, CNPJ, user, descricao);
                 listaLojas.add(loja);
             }
 
@@ -86,7 +83,7 @@ public class LojaDAO extends GenericDAO {
     }
 
     public void update(Loja loja) {
-        String sql = "UPDATE LOJA SET loja_CNPJ = ?, loja_email = ?, loja_senha = ?, loja_nome = ?, loja_descricao = ? WHERE loja_id = ?";
+        String sql = "UPDATE LOJA SET loja_CNPJ = ?, loja_email = ?, loja_descricao = ? WHERE loja_id = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -94,10 +91,8 @@ public class LojaDAO extends GenericDAO {
 
             statement.setString(1, loja.getCNPJ());
             statement.setString(2, loja.getEmail());
-            statement.setString(3, loja.getSenha());
-            statement.setString(4, loja.getNome());
-            statement.setString(5, loja.getDescricao());
-            statement.setLong(6, loja.getId());
+            statement.setString(3, loja.getDescricao());
+            statement.setLong(4, loja.getId());
             statement.executeUpdate();
 
             statement.close();
@@ -119,13 +114,12 @@ public class LojaDAO extends GenericDAO {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
+                UsuarioDAO usuarioDao = new UsuarioDAO();
                 String CNPJ = resultSet.getString("loja_CNPJ");
                 String email = resultSet.getString("loja_email");
-                String senha = resultSet.getString("loja_senha");
-                String nome = resultSet.getString("loja_nome");
                 String descricao = resultSet.getString("loja_descricao");
-
-                loja = new Loja(id, CNPJ, email, senha, nome, descricao);
+                Usuario user = usuarioDao.getbyEmail(email);
+                loja = new Loja(id, CNPJ, user, descricao);
             }
 
             resultSet.close();
@@ -149,13 +143,12 @@ public class LojaDAO extends GenericDAO {
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
+                UsuarioDAO usuarioDao = new UsuarioDAO();
                 Long id = resultSet.getLong("loja_id");
                 String CNPJ = resultSet.getString("loja_CNPJ");
-                String senha = resultSet.getString("loja_senha");
-                String nome = resultSet.getString("loja_nome");
                 String descricao = resultSet.getString("loja_descricao");
-
-                loja = new Loja(id, CNPJ, email, senha, nome, descricao);
+                Usuario user = usuarioDao.getbyEmail(email);
+                loja = new Loja(id, CNPJ, user, descricao);
             }
 
             resultSet.close();

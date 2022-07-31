@@ -13,44 +13,50 @@
 
             <body>
 
+                <c:set var="loja" value="${requestScope.loja}" />
+                <c:set var="usuario" value="${requestScope.usuario}" />
+
                 <c:if test="${mensagens.existeErros}">
                     <div id="erro">
                         <ul>
                             <c:forEach var="erro" items="${mensagens.erros}">
-                                <li>${erro}</li>
+                                <li> ${erro} </li>
                             </c:forEach>
                         </ul>
                     </div>
                 </c:if>
 
-                <form class="formulario_de_loja" method="post" action="novaLoja">
+                <form class="formulario_de_loja" method="post" action="atualizacaoLoja?loja_id=${usuario.getId()}">
                     <fieldset>
-                        <legend>Cadastro de lojas</legend>
+                        <legend>Edição de lojas</legend>
 
                         <label>E-mail
-                            <input id="email" type="email" name="email" placeholder="email@email.com" />
+                            <input disabled id="email" type="email" name="email" placeholder="email@email.com"
+                                value="${loja.getEmail()}" />
                         </label>
 
                         <label>Senha
-                            <input id="senha" type="password" name="senha" />
+                            <input id="senha" type="password" name="senha" value="${loja.getSenha()}" />
                         </label>
 
                         <label>CNPJ
                             <input id="cnpj" type="text" name="cnpj" placeholder="XX.XXX.XXX/0001-XX" maxlength="14"
+                                value="${loja.getCNPJ()}"
                                 onkeypress="if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;">
                         </label>
 
                         <label>Nome
-                            <input id="nome" type="text" name="nome">
+                            <input id="nome" type="text" name="nome" value="${loja.getNome()}">
                         </label>
 
                         <label>
                             <textarea id="descricao" name="descricao" rows="7" cols="34"
-                                placeholder="Digite a descrição da loja"></textarea>
+                                placeholder="Digite a descrição da loja" value="${loja.getDescricao()}">
+                            </textarea>
                         </label>
 
                         <button type="submit" id="botao">
-                            Cadastrar
+                            Editar
                     </fieldset>
                     </button>
                 </form>

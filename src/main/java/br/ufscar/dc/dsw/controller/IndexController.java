@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.ufscar.dc.dsw.dao.PessoaDAO;
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
+import br.ufscar.dc.dsw.domain.Pessoa;
 import br.ufscar.dc.dsw.domain.Usuario;
 import br.ufscar.dc.dsw.util.Erro;
 
@@ -20,12 +22,14 @@ public class IndexController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response)
 			throws ServletException, IOException {
 		Erro erros = new Erro();
 		if (request.getParameter("bOK") != null) {
@@ -42,11 +46,18 @@ public class IndexController extends HttpServlet {
 				Usuario usuario = dao.getbyEmail(login);
 				if (usuario != null) {
 					if (usuario.getSenha().equals(senha)) {
-						request.getSession().setAttribute("usuarioLogado", usuario);
-						if (usuario.getTipo().equals("ADMIN")) {
-							response.sendRedirect("admin/");
+						request.getSession()
+								.setAttribute("usuarioLogado", usuario);
+						if (usuario.getTipo().equals("PESSOA")) {
+							PessoaDAO pessoaDAO = new PessoaDAO();
+							Pessoa pessoa = pessoaDAO.getbyEmail(login);
+							if (pessoa.getTipo().equals("ADMIN")) {
+								response.sendRedirect("admin/");
+							} else {
+								response.sendRedirect("usuario/");
+							}
 						} else {
-							response.sendRedirect("usuario/");
+
 						}
 						return;
 					} else {

@@ -4,30 +4,22 @@ public class Loja {
 
     private Long id;
     private String CNPJ;
-    private String email;
-    private String senha;
-    private String nome;
     private String descricao;
+    private Usuario usuario;
 
-    public Loja(Long id, String CNPJ, String email, String senha,
-            String nome, String descricao) {
+    public Loja(Long id, String CNPJ, Usuario user, String descricao) {
         if (CNPJ.length() == 14) {
             this.id = id;
             this.CNPJ = CNPJ;
-            this.email = email;
-            this.senha = senha;
-            this.nome = nome;
             this.descricao = descricao;
+            this.usuario = user;
         }
     }
 
-    public Loja(String CNPJ, String email, String senha,
-            String nome, String descricao) {
+    public Loja(String CNPJ, Usuario user, String descricao) {
         if (CNPJ.length() == 14) {
             this.CNPJ = CNPJ;
-            this.email = email;
-            this.senha = senha;
-            this.nome = nome;
+            this.usuario = user;
             this.descricao = descricao;
         }
     }
@@ -46,7 +38,7 @@ public class Loja {
     // }
 
     public String getEmail() {
-        return email;
+        return usuario.getEmail();
     }
 
     // public void setEmail(String email) {
@@ -54,7 +46,7 @@ public class Loja {
     // }
 
     public String getSenha() {
-        return senha;
+        return usuario.getSenha();
     }
 
     // public void setSenha(String senha) {
@@ -62,7 +54,7 @@ public class Loja {
     // }
 
     public String getNome() {
-        return nome;
+        return usuario.getNome();
     }
 
     // public void setNome(String nome) {
@@ -76,4 +68,8 @@ public class Loja {
     // public void setDescricao(String descricao) {
     // this.descricao = descricao;
     // }
+
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
 }

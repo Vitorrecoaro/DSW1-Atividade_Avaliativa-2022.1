@@ -7,10 +7,21 @@
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
                 <title>Menu do Sistema</title>
-                <link rel="stylesheet" href="css/painelAdministrativo.css" type="text/css" />
+                <!-- <link rel="stylesheet" href="css/painelAdministrativo.css" type="text/css" /> -->
             </head>
 
             <body>
+
+                <c:if test="${mensagens.existeErros}">
+                    <div id="erro">
+                        <ul>
+                            <c:forEach var="erro" items="${mensagens.erros}">
+                                <li> ${erro} </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </c:if>
+
                 <% String contextPath=request.getContextPath().replace("/", "" ); %>
                     <h1>Página do Administrador</h1>
 
@@ -49,18 +60,20 @@
                                 </tr>
                                 <c:forEach var="usuario" items="${requestScope.listaUsuarios}">
                                     <tr>
-                                        <td>${usuario.getNome()}</td>
-                                        <td>${usuario.getEmail()}</td>
+                                        <td>${usuario.getUsuario().getNome()}</td>
+                                        <td>${usuario.getUsuario().getEmail()}</td>
                                         <td>${usuario.getTelefone()}</td>
                                         <td>${usuario.getSexo()}</td>
                                         <td>${usuario.getDataNasc()}</td>
                                         <td>${usuario.getTipo()}</td>
                                         <td>
-                                            <a href="/<%=contextPath%>/admin/atualizacao?user_id=${usuario.id}">
+                                            <a
+                                                href="/<%=contextPath%>/admin/atualizacao?user_id=${usuario.getUsuario().id}">
                                                 Editar usuário</a>
                                         </td>
                                         <td>
-                                            <a href="/<%=contextPath%>/admin/removeUsuario?user_id=${usuario.id}">
+                                            <a
+                                                href="/<%=contextPath%>/admin/removeUsuario?user_id=${usuario.getUsuario().id}">
                                                 Remover usuário
                                             </a>
                                         </td>
@@ -82,6 +95,18 @@
                                         <td>${loja.getNome()}</td>
                                         <td>${loja.getEmail()}</td>
                                         <td>${loja.getDescricao()}</td>
+                                        <td>
+                                            <a
+                                                href="/<%=contextPath%>/admin/atualizaLoja?loja_id=${loja.getUsuario().id}">
+                                                Editar loja
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a
+                                                href="/<%=contextPath%>/admin/removeLoja?loja_id=${loja.getUsuario().id}">
+                                                Remover loja
+                                            </a>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </table>
