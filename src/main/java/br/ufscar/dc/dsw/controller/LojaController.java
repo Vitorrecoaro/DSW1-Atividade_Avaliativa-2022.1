@@ -31,6 +31,7 @@ public class LojaController extends HttpServlet {
     private PropostaDAO propostaDAO;
     private List<Proposta> listaPropostas;
     private Usuario usuario = null;
+    private VeiculoDAO veiculoDAO = new VeiculoDAO();
 
     @Override
     public void init() {
@@ -77,6 +78,8 @@ public class LojaController extends HttpServlet {
                                 .getRequestDispatcher(
                                         "/logado/loja/index.jsp");
                         request.setAttribute("listaPropostas", listaPropostas);
+                        List<Veiculo> listaVeiculos = veiculoDAO.getAllbyLoja(loja);
+                        request.setAttribute("listaVeiculos", listaVeiculos);
                         dispatcher.forward(request, response);
                         break;
                 }

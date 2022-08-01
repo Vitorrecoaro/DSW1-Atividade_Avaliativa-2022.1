@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufscar.dc.dsw.domain.Loja;
 import br.ufscar.dc.dsw.domain.Veiculo;
 
 public class VeiculoDAO extends GenericDAO {
@@ -50,6 +51,44 @@ public class VeiculoDAO extends GenericDAO {
             Statement statement = conn.createStatement();
 
             ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("veic_id");
+                String placa = resultSet.getString("veic_placa");
+                String CNPJ = resultSet.getString("veic_loja_CNPJ");
+                String modelo = resultSet.getString("veic_modelo");
+                String chassi = resultSet.getString("veic_chassi");
+                int ano = resultSet.getInt("veic_ano");
+                float kms = resultSet.getFloat("veic_quilometragem");
+                String descricao = resultSet.getString("veic_descricao");
+                float valor = resultSet.getFloat("veic_valor");
+                String foto = resultSet.getString("veic_fotos");
+                Veiculo veiculo = new Veiculo(id, placa, CNPJ,
+                        modelo, chassi, ano, kms, descricao, valor,
+                        foto);
+                listaVeiculos.add(veiculo);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaVeiculos;
+    }
+
+    public List<Veiculo> getAllbyLoja(Loja loja) {
+
+        List<Veiculo> listaVeiculos = new ArrayList<>();
+
+        String sql = "SELECT * from VEICULO WHERE veic_loja_CNPJ = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, loja.getCNPJ());
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Long id = resultSet.getLong("veic_id");
                 String placa = resultSet.getString("veic_placa");

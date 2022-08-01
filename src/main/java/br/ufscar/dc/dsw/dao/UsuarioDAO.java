@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufscar.dc.dsw.domain.Pessoa;
 import br.ufscar.dc.dsw.domain.Usuario;
 
 public class UsuarioDAO extends GenericDAO {

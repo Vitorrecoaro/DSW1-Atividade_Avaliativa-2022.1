@@ -154,10 +154,10 @@ public class AdminController extends HttpServlet {
 			throws ServletException, IOException {
 
 		Long id = Long.parseLong(request.getParameter("loja_id"));
-		LojaDAO lojaDAO = new LojaDAO();
-		Loja loja = lojaDAO.getbyID(id);
 		UsuarioDAO dao = new UsuarioDAO();
-		Usuario usuario = dao.getbyEmail(loja.getEmail());
+		Usuario usuario = dao.getbyID(id);
+		LojaDAO lojaDAO = new LojaDAO();
+		Loja loja = lojaDAO.getbyEmail(usuario.getEmail());
 		try {
 			lojaDAO.delete(loja);
 			dao.delete(usuario);
@@ -283,10 +283,10 @@ public class AdminController extends HttpServlet {
 			throws ServletException, IOException {
 
 		Long id = Long.parseLong(request.getParameter("user_id"));
-		PessoaDAO pessoaDAO = new PessoaDAO();
-		Pessoa pessoa = pessoaDAO.getbyID(id);
 		UsuarioDAO dao = new UsuarioDAO();
-		Usuario usuario = dao.getbyEmail(pessoa.getUsuario().getEmail());
+		Usuario usuario = dao.getbyID(id);
+		PessoaDAO pessoaDAO = new PessoaDAO();
+		Pessoa pessoa = pessoaDAO.getbyEmail(usuario.getEmail());
 		try {
 			pessoaDAO.delete(pessoa);
 			dao.delete(usuario);
