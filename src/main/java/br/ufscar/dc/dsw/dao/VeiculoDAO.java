@@ -13,7 +13,7 @@ import br.ufscar.dc.dsw.domain.Veiculo;
 public class VeiculoDAO extends GenericDAO {
     public void insert(Veiculo veiculo) {
 
-        String sql = "INSERT INTO VEICULO VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO VEICULO(veic_placa, veic_loja_CNPJ, veic_modelo, veic_chassi, veic_ano, veic_quilometragem, veic_descricao, veic_valor, veic_fotos ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             Connection conn = this.getConnection();
@@ -21,16 +21,15 @@ public class VeiculoDAO extends GenericDAO {
             ;
 
             statement = conn.prepareStatement(sql);
-            statement.setLong(1, veiculo.getId());
-            statement.setString(2, veiculo.getPlaca());
-            statement.setString(3, veiculo.getCNPJ());
-            statement.setString(4, veiculo.getModelo());
-            statement.setString(5, veiculo.getChassi());
-            statement.setInt(6, veiculo.getAno());
-            statement.setFloat(7, veiculo.getQuilometragem());
-            statement.setString(8, veiculo.getDescricao());
-            statement.setFloat(9, veiculo.getValor());
-            statement.setString(10, veiculo.getFoto());
+            statement.setString(1, veiculo.getPlaca());
+            statement.setString(2, veiculo.getCNPJ());
+            statement.setString(3, veiculo.getModelo());
+            statement.setString(4, veiculo.getChassi());
+            statement.setInt(5, veiculo.getAno());
+            statement.setFloat(6, veiculo.getQuilometragem());
+            statement.setString(7, veiculo.getDescricao());
+            statement.setFloat(8, veiculo.getValor());
+            statement.setString(9, veiculo.getFoto());
             statement.executeUpdate();
 
             statement.close();

@@ -9,6 +9,40 @@
                 <meta charset="UFT-8">
                 <title>Cadastro de usuários</title>
                 <link href="formCadastroUser.css" rel="stylesheet" type="text/css" />
+                <style type="text/css">
+                    legend {
+                        width: 80%;
+                        text-align: center;
+                    }
+
+
+                    .formulario_de_usuario {
+                        font-style: oblique;
+                        font-size: 35px;
+                        display: flex;
+                        margin: 0 auto;
+                        justify-content: center;
+                        padding-top: 5%;
+                    }
+
+                    label {
+                        display: block;
+                        margin-bottom: 15px;
+                    }
+
+                    #sexo {
+                        font-size: 18px;
+                    }
+
+                    #nascimento {
+                        font-size: 18px;
+                    }
+
+                    #botao {
+                        margin-left: 35%;
+                        font-size: 20px;
+                    }
+                </style>
             </head>
 
             <body>

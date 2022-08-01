@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.ufscar.dc.dsw.dao.PessoaDAO;
 import br.ufscar.dc.dsw.dao.UsuarioDAO;
+import br.ufscar.dc.dsw.dao.VeiculoDAO;
 import br.ufscar.dc.dsw.domain.Pessoa;
 import br.ufscar.dc.dsw.domain.Usuario;
+import br.ufscar.dc.dsw.domain.Veiculo;
 import br.ufscar.dc.dsw.util.Erro;
 
 @WebServlet(name = "Index", urlPatterns = { "/index.jsp", "/logout" })
@@ -56,8 +59,8 @@ public class IndexController extends HttpServlet {
 							} else {
 								response.sendRedirect("usuario/");
 							}
-						} else {
-
+						} else if (usuario.getTipo().equals("LOJA")) {
+							response.sendRedirect("loja/");
 						}
 						return;
 					} else {
@@ -68,11 +71,13 @@ public class IndexController extends HttpServlet {
 				}
 			}
 		}
+		VeiculoDAO veiculoDao = new VeiculoDAO();
+		List<Veiculo> listaVeiculos = veiculoDao.getAll();
 		request.getSession().invalidate();
-
 		request.setAttribute("mensagens", erros);
+		request.setAttribute("listaVeiculos", listaVeiculos);
 
-		String URL = "/login.jsp";
+		String URL = "/ListaVeiculos.jsp";
 		RequestDispatcher rd = request.getRequestDispatcher(URL);
 		rd.forward(request, response);
 	}

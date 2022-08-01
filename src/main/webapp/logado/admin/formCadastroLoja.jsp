@@ -8,7 +8,32 @@
             <head>
                 <meta charset="UFT-8">
                 <title>Cadastro de lojas</title>
-                <link rel="stylesheet" type="text/css" href="formCadastroLoja.css">
+                <style type="text/css">
+                    legend {
+                        width: 70%;
+                        text-align: center;
+                    }
+
+                    .formulario_de_loja {
+                        font-style: oblique;
+                        font-size: 35px;
+                        display: flex;
+                        margin: 0 auto;
+                        justify-content: center;
+                        padding-top: 5%;
+                    }
+
+                    label {
+                        display: block;
+                        margin-bottom: 15px;
+                    }
+
+                    #botao {
+                        margin-left: 35%;
+                        font-size: 20px;
+                    }
+                </style>
+
             </head>
 
             <body>

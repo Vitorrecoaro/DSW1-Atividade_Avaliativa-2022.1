@@ -42,9 +42,9 @@ CREATE TABLE IF NOT EXISTS VEICULO(
     veic_modelo VARCHAR(256) NOT NULL,
     veic_chassi VARCHAR(256) NOT NULL,
     veic_ano INT NOT NULL,
-    veic_quilometragem FLOAT NOT NULL,
+    veic_quilometragem INT NOT NULL,
     veic_descricao VARCHAR(256) NOT NULL,
-    veic_valor FLOAT NOT NULL,
+    veic_valor INT NOT NULL,
     veic_fotos VARCHAR(256) NOT NULL,
     FOREIGN KEY (veic_loja_CNPJ) REFERENCES LOJA(loja_CNPJ)
 );

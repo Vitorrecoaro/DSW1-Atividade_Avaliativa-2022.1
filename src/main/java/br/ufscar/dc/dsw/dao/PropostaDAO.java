@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufscar.dc.dsw.domain.Loja;
 import br.ufscar.dc.dsw.domain.Proposta;
 
 public class PropostaDAO extends GenericDAO {
@@ -172,5 +173,39 @@ public class PropostaDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
         return proposta;
+    }
+
+    public List<Proposta> getAllByCNPJ(Loja loja) {
+        List<Proposta> listaPropostas = new ArrayList<Proposta>();
+
+        String sql = "SELECT * from PROPOSTA WHERE prop_loja_CNPJ = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, loja.getCNPJ());
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("prop_id");
+                String CPF = resultSet.getString("prop_user_CPF");
+                Date data = resultSet.getDate("prop_data");
+                float valor = resultSet.getFloat("prop_valor");
+                String status = resultSet.getString("prop_status");
+                String CNPJ = resultSet.getString("prop_loja_CNPJ");
+                String placa = resultSet.getString("prop_veic_placa");
+
+                Proposta proposta = new Proposta(id, CPF, placa,
+                        data, valor, status, CNPJ);
+                listaPropostas.add(proposta);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaPropostas;
     }
 }
