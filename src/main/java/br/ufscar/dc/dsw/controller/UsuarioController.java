@@ -40,32 +40,33 @@ public class UsuarioController extends HttpServlet {
 			HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String action = request.getPathInfo();
-		if (action == null) {
-			action = "";
-		}
-
-		try {
-			switch (action) {
-				default:
-					lista(request, response);
-					break;
-			}
-		} catch (RuntimeException | IOException | ServletException e) {
-			throw new ServletException(e);
-		}
-	}
-
-	private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+		Usuario usuario = (Usuario) request.getSession()
+				.getAttribute("usuarioLogado");
 		Erro erros = new Erro();
 
 		if (usuario == null) {
 			response.sendRedirect(request.getContextPath());
-		} else if (usuario.getTipo().equals("USER")) {
-			RequestDispatcher dispatcher = request
-					.getRequestDispatcher("/logado/usuario/index.jsp");
-			dispatcher.forward(request, response);
+		} else if (usuario.getTipo().equals("PESSOA")) {
+			request.setAttribute("usuarioLogado", usuario);
+			String action = request.getPathInfo();
+			if (action == null) {
+				action = "";
+			}
+
+			try {
+				switch (action) {
+					case "/painel":
+						painelUsuario(request, response);
+						break;
+					default:
+						RequestDispatcher dispatcher = request
+								.getRequestDispatcher("/index.jsp");
+						dispatcher.include(request, response);
+				}
+			} catch (RuntimeException | IOException | ServletException e) {
+				throw new ServletException(e);
+			}
+
 		} else {
 			erros.add("Acesso não autorizado!");
 			erros.add("Faça o login para acessar esta página.");
@@ -74,10 +75,12 @@ public class UsuarioController extends HttpServlet {
 					.getRequestDispatcher("/noAuth.jsp");
 			rd.forward(request, response);
 		}
+	}
 
-		List<Usuario> listaUsuarios = dao.getAll();
-		request.setAttribute("listaUsuarios", listaUsuarios);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/usuario/lista.jsp");
-		dispatcher.forward(request, response);
+	private void painelUsuario(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatcher = request
+				.getRequestDispatcher("/logado/usuario/index.jsp");
+		dispatcher.include(request, response);
 	}
 }
