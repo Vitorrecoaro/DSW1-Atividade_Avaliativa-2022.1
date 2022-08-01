@@ -136,9 +136,11 @@
 
                                             </ul>
                                         </div>
-                                        <div class="card-footer">
-                                            <a href="#" class="btn">Fazer proposta</a>
-                                        </div>
+                                        <c:if test="${requestScope.usuarioLogado != null}">
+                                            <div class="card-footer">
+                                                <a href="#" class="btn">Fazer proposta</a>
+                                            </div>
+                                        </c:if>
                                     </div>
                                 </c:forEach>
                             </c:if>
