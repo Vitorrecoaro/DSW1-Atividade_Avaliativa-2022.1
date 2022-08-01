@@ -17,7 +17,7 @@
 
                     .formulario_de_usuario {
                         font-style: oblique;
-                        font-size: 35px;
+                        font-size: 45px;
                         display: flex;
                         margin: 0 auto;
                         justify-content: center;

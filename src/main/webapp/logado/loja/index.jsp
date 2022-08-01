@@ -38,17 +38,24 @@ prefix="c" %>
     <c:if test="${requestScope.listaPropostas.size() > 0}">
       <h3>Propostas vinculadas</h3>
 
-      <table>
+      <table border="1">
         <c:forEach var="proposta" items="${requestScope.listaPropostas}">
           <tr>
+            <th>Status</th>
             <th>Placa</th>
             <th>Valor</th>
-            <th>Status</th>
+            <th>Data</th>
+            <th>Resposta</th>
           </tr>
           <tr>
-            <td>${proposta.getPlaca()}</td>
+            <td>${proposta.getStatus()}</td>
+            <td>${proposta.getVeicPlaca()}</td>
             <td>${proposta.getValor()}</td>
-            <td>Botao (Aceitar) (Nao Aceitar)</td>
+            <td>${proposta.getData()}</td>
+            <td>
+              <input type="submit" value="Aceitar">
+              <input type="submit" value="Recusar">
+            </td>
           </tr>
         </c:forEach>
       </table>
