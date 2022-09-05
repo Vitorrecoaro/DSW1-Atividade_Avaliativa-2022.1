@@ -1,0 +1,97 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UFT-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Painel Administrativo</title>
+</head>
+
+<header th:replace="~{fragmentos::navigationAdmin}"></header>
+
+<body>
+    <div th:if="${users.size() > 0}">
+        <h3>Usuários:</h3>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr class="info">
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Tipo de usuário</th>
+                    <th scope="col">Gênero</th>
+                    <th scope="col" colspan="2">Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.nome}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.cpf}"></td>
+                    <td th:text="${user.tipo}"></td>
+                    <td th:text="${user.sexo}"></td>
+                    <td>
+                        <form th:action="@{/admin/usuario/{userId} (userId = ${user.id})}" method="get">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                Editar usuário
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{/admin/usuario/delete/{userId} (userId = ${user.id})}" method="get">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                Remover usuário
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${stores.size() > 0}">
+        <h3>Lojas:</h3>
+        <table class="table table-hover table-bordered" th:if="${stores.size() > 0}">
+            <thead>
+                <tr class="info">
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">CNPJ</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col" colspan="2">Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="loja : ${stores}">
+                    <td th:text="${loja.id}"></td>
+                    <td th:text="${loja.nome}"></td>
+                    <td th:text="${loja.email}"></td>
+                    <td th:text="${loja.cnpj}"></td>
+                    <td th:text="${loja.descricao}"></td>
+                    <td>
+                        <form th:action="@{/admin/loja/{lojaId} (lojaId = ${loja.id})}" method="get">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                Editar loja
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{/admin/loja/delete/{lojaId} (lojaId = ${loja.id})}" method="get">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                Remover loja
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

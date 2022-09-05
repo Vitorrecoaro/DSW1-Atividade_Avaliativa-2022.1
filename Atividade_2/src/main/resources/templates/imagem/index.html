@@ -1,0 +1,94 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UFT-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .imagens {
+            width: "100px";
+        }
+
+        .table {
+            margin-left: 2%;
+            width: 95%;
+        }
+
+        h3 {
+            margin-bottom: 2%;
+            margin-left: 2%;
+        }
+    </style>
+    <title>Imagens</title>
+</head>
+
+<header th:replace="~{fragmentos::navigationLoja}"></header>
+
+<body>
+    <h3>Imagens:</h3>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr class="info">
+                <th scope="col">ID</th>
+                <th scope="col">Imagem 1</th>
+                <th scope="col">Imagem 2</th>
+                <th scope="col">Imagem 3</th>
+                <th scope="col">Imagem 4</th>
+                <th scope="col">Imagem 5</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="veiculo : ${veiculo}">
+                <td scope="row" th:text="${veiculo.id}">ID</td>
+                <td><img width="100px" th:src="${veiculo.path}" /></td>
+                <td><img width="100px" th:src="${veiculo.path2}" /></td>
+                <td><img width="100px" th:src="${veiculo.path3}" /></td>
+                <td><img width="100px" th:src="${veiculo.path4}" /></td>
+                <td><img width="100px" th:src="${veiculo.path5}" /></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr class="info">
+                <th scope="col">Imagem 6</th>
+                <th scope="col">Imagem 7</th>
+                <th scope="col">Imagem 8</th>
+                <th scope="col">Imagem 9</th>
+                <th scope="col">Imagem 10</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="veiculo : ${veiculo}">
+                <td><img width="100px" th:src="${veiculo.path6}" /></td>
+                <td><img width="100px" th:src="${veiculo.path7}" /></td>
+                <td><img width="100px" th:src="${veiculo.path8}" /></td>
+                <td><img width="100px" th:src="${veiculo.path9}" /></td>
+                <td><img width="100px" th:src="${veiculo.path10}" /></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-5 col-sm-10">
+            <form th:action="@{/veiculos/{veiculoId}/novaImagem (veiculoId = ${veiculo.id})}">
+                <button type="submit" class="btn btn-primary btn-sm">Editar imagens</button>
+            </form>
+            <form th:action="@{/veiculos/{veiculoId} (veiculoId = ${veiculo.id})}">
+                <button type="submit" class="btn btn-primary btn-sm">Voltar</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
