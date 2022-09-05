@@ -1,0 +1,92 @@
+<style>
+    .container-fluid {
+        display: flex;
+        align-items: center;
+
+    }
+</style>
+
+<div class="errosContainer" th:fragment="errors(error)">
+    <p th:text="${error}"></p>
+</div>
+
+<!-- Header navigation without user -->
+<header th:fragment="navigationWithOutLogin">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" th:href="@{/}">Leilão de Veículos</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/}">Home</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form th:action="@{/login}">
+                    <li><button type="submit"><span class="glyphicon glyphicon-log-in"></span> Login</button></li>
+                </form>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<!-- Header navigation admin -->
+<header th:fragment="navigationAdmin">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" th:href="@{/}">Leilão de Veículos</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/admin}">Painel Administrativo</a></li>
+                <li><a th:href="@{/admin/usuario}">Criar usuários</a></li>
+                <li><a th:href="@{/admin/loja}">Criar lojas</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form th:action="@{/logout}" method="post">
+                    <li><button type="submit"><span class="glyphicon glyphicon-log-in"></span> Logout</button></li>
+                </form>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<!-- Header for Users -->
+<header th:fragment="navigationUser">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" th:href="@{/}">Leilão de Veículos</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/usuario}">Propostas</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form th:action="@{/logout}" method="post">
+                    <li><button type="submit"><span class="glyphicon glyphicon-log-in"></span> Logout</button></li>
+                </form>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<!-- Header for Stores -->
+<header th:fragment="navigationLoja">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" th:href="@{/}">Leilão de Veículos</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/veiculos}">Painel da loja</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <form th:action="@{/logout}" method="post">
+                    <li><button type="submit"><span class="glyphicon glyphicon-log-in"></span> Logout</button></li>
+                </form>
+            </ul>
+        </div>
+    </nav>
+</header>

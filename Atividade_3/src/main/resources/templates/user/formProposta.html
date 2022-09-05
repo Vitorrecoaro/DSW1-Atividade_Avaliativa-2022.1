@@ -1,0 +1,66 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    .container {
+      margin-top: -1.5%;
+      margin-left: 25%;
+      box-shadow: 0px 0px 15px rgb(0 0 0 / 35%);
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+  </style>
+  <title>Propostas</title>
+</head>
+
+
+<body>
+  <header th:replace="~{fragmentos::navigationUser}">
+  </header>
+
+
+  <body>
+
+    <div th:if="${error}" th:replace="~{fragmentos::errors(${error})}"></div>
+    <div class="container col-lg-6">
+      <h2>Proposta</h2>
+      <form class="form-horizontal" method="POST" th:action="@{/usuario/proposta/{id} (id = ${carro.id})}"
+        th:object="${proposta}">
+        <div class="form-group">
+          <label for="proposta" class="control-label col-sm-2">Valor da proposta:</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{preco}" placeholder="20000,00"
+              onkeypress="if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="condicoes" class="control-label col-sm-2">Condições de pagamento:</label>
+          <div class="col-sm-10">
+            <select required id="condicoes" th:field="*{modo_de_pagamento}">
+              <option value="Vista">À vista</option>
+              <option value="Parcelado">Parcelado</option>
+            </select>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit"><span class="btn btn-primary" id="botao"></span>Criar proposta</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+</html>

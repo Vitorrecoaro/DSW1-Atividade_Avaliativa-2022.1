@@ -1,0 +1,115 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+    body {
+      overflow: hidden;
+      /* Hide scrollbars */
+    }
+
+    .container {
+      margin-top: -3%;
+      margin-left: 25%;
+      box-shadow: 0px 0px 15px rgb(0 0 0 / 35%);
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+  </style>
+  <title>Detalhes</title>
+</head>
+
+<header th:replace="~{fragmentos::navigationLoja}"></header>
+
+<body>
+  <div th:if="${error}">
+    <ul>
+      <li th:text="${error}"></li>
+    </ul>
+  </div>
+
+  <div class="container col-lg-6">
+    <h2>Detalhes</h2>
+
+    <form th:action="@{/veiculos/{veiculoId}/imagens (veiculoId = ${veiculo.id})}" method="get"
+      style="margin-bottom: 2%">
+      <button type="submit" class="btn btn-primary btn-sm">
+        Ver imagens
+      </button>
+    </form>
+
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="modelo" class="control-label col-sm-2">Placa:</label>
+        <div class="col-sm-10">
+          <a><span th:text="${veiculo.placa}"></span></a>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="modelo" class="control-label col-sm-2">Modelo:</label>
+        <div class="col-sm-10">
+          <a><span th:text="${veiculo.modelo}"></span></a>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="ano" class="control-label col-sm-2">Chassi:</label>
+        <div class="col-sm-10">
+          <a><span th:text="${veiculo.chassi}"></span></a>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="ano" class="control-label col-sm-2">Ano:</label>
+        <div class="col-sm-10">
+          <a><span th:text="${veiculo.ano}"></span></a>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="ano" class="control-label col-sm-2">Quilometragem:</label>
+        <div class="col-sm-10">
+          <a><span th:text="${veiculo.quilometragem}"></span></a>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="ano" class="control-label col-sm-2">Valor:</label>
+        <div class="col-sm-10">
+          <a><span th:text="${veiculo.valor}"></span></a>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="descricao" class="control-label col-sm-2">Descrição</label>
+        <div class="col-sm-10">
+          <span th:text="${veiculo.descricao}">Descricao</span>
+        </div>
+      </div>
+    </form>
+    <div class="form-group">
+      <div class="col-sm-10">
+        <form th:action="@{/veiculos/{id}/propostas (id = ${veiculo.id})}" method="get">
+          <button type="submit" class="btn btn-primary btn-sm">
+            Propostas
+          </button>
+        </form>
+        <form th:action="@{/veiculos/}" method="get">
+          <button type="submit" class="btn btn-primary btn-sm">Voltar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

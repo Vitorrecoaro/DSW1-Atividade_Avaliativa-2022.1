@@ -1,0 +1,47 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <title>Propostas de usuário</title>
+</head>
+
+<header th:replace="~{fragmentos::navigationUser}"></header>
+
+<body>
+  <div class="header text-center">
+    <h2>Seja bem-vindo!<span></span>!</h2>
+    <h3>Propostas</h3>
+  </div>
+
+  <div th:if="${propostas.size() > 0}">
+    <table class="table table-hover table-bordered">
+      <thead>
+        <tr class="info">
+          <th scope="col">Carro</th>
+          <th scope="col">Valor</th>
+          <th scope="col">Condições de pagamento</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="proposta : ${propostas}">
+          <td th:text="${proposta.id}"></td>
+          <td th:text="${proposta.preco}"></td>
+          <td th:text="${proposta.modo_de_pagamento}"></td>
+          <td th:text="${proposta.status}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+</html>

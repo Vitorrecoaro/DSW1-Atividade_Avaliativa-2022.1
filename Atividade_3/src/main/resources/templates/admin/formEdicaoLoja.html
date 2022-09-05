@@ -1,0 +1,89 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            overflow: hidden;
+            /* Hide scrollbars */
+        }
+
+        .container {
+            margin-left: 25%;
+            box-shadow: 0px 0px 15px rgb(0 0 0 / 35%);
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+    </style>
+    <title>Edição de lojas</title>
+</head>
+
+<header th:replace="~{fragmentos::navigationAdmin}"></header>
+
+<body>
+
+    <div th:if="${error}" th:replace="~{fragmentos::errors(${error})}"></div>
+
+    <div class="container col-lg-6">
+        <h2>Edição de lojas</h2>
+        <form class="form-horizontal" method="POST" th:action="@{/admin/loja/{lojaId} (lojaId = ${loja.id})}"
+            th:object="${loja}">
+            <div class="form-group">
+                <label for="email" class="control-label col-sm-2">Email:</label>
+                <div class="col-sm-10">
+                    <input id="email" type="email" class="email" th:field="*{email}" placeholder="email@email.com"
+                        th:value="${loja.email}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="senha" class="control-label col-sm-2">Senha:</label>
+                <div class="col-sm-10">
+                    <input id="senha" type="password" class="senha" th:field="*{senha}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="cnpj" class="control-label col-sm-2">CNPJ:</label>
+                <div class="col-sm-10">
+                    <input id="cnpj" type="text" th:field="*{cnpj}" class="cnpj" placeholder="XX.XXX.XXX/0001-XX"
+                        maxlength="14"
+                        onkeypress="if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;"
+                        th:value="${loja.cnpj}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nome" class="control-label col-sm-2">Nome:</label>
+                <div class="col-sm-10">
+                    <input id="nome" type="text" class="nome" th:field="*{nome}" th:value="${loja.nome}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="descricao" class="control-label col-sm-2">Descrição</label>
+                <div class="col-sm-10">
+                    <textarea id="descricao" class="descricao" rows="7" cols="34" th:field="*{descricao}"
+                        placeholder="Digite a descrição da loja" th:text="${loja.descricao}"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary" id="botao">Editar</button>
+                </div>
+            </div>
+    </div>
+    </form>
+    </div>
+</body>
+
+</html>

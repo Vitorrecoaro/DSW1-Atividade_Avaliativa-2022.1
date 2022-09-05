@@ -1,0 +1,26 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${error}"></title>
+</head>
+
+<body class="text-center">
+	<div>
+		<h1>
+			<span th:text="${status} + ' - ' + ${message}"></span>
+		</h1>
+
+		<hr>
+
+		<div>
+			<br>
+			<a type="button" href="javascript:history.back()">
+				<span>Voltar</span>
+			</a>
+		</div>
+	</div>
+</body>
+
+</html>

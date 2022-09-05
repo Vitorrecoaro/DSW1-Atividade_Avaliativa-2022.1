@@ -1,0 +1,79 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            overflow: hidden;
+            /* Hide scrollbars */
+        }
+
+        .container {
+            margin-left: 25%;
+            box-shadow: 0px 0px 15px rgb(0 0 0 / 35%);
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+    </style>
+    <title>Login</title>
+</head>
+
+<div th:if="${typeUser == null}">
+    <header th:replace="~{fragmentos::navigationWithOutLogin}"></header>
+</div>
+
+<div th:if="${typeUser != null && typeUser == 'ROLE_ADMIN'}">
+    <header th:replace="~{fragmentos::navigationAdmin}"></header>
+</div>
+
+<div th:if="${typeUser != null && typeUser == 'ROLE_USER'}">
+    <header th:replace="~{fragmentos::navigationUser}"></header>
+</div>
+
+<div th:if="${typeUser != null && typeUser == 'ROLE_STORE'}">
+    <header th:replace="~{fragmentos::navigationLoja}"></header>
+</div>
+
+<body>
+    <div th:if="${param.error}">
+        Usuário ou senha incorretos.
+    </div>
+
+    <div th:if="${param.logout}">
+        Você se desconectou!
+    </div>
+
+    <div class="container col-lg-6">
+        <h2>Página de login</h2>
+        <form class="form-horizontal" th:action="@{/login}" method="POST" th:object="${user}">
+            <div class="form-group">
+                <label for="email" class="control-label col-sm-2">Email:</label>
+                <div class="col-sm-10">
+                    <input id="" type="email" placeholder="email@email.com" name="username" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="senha" class="control-label col-sm-2">Senha:</label>
+                <div class="col-sm-10">
+                    <input id="" type="password" name="password" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary" id="botao">Login</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</html>
