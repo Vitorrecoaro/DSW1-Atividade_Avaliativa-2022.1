@@ -20,10 +20,10 @@ import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.domain.St
 import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.domain.Veiculo;
 
 @SpringBootApplication
-public class Atividade3 {
+public class Atividade_Avaliativa_2Compra_e_venda_de_carros {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Atividade3.class, args);
+		SpringApplication.run(Atividade_Avaliativa_2Compra_e_venda_de_carros.class, args);
 	}
 
 	@Bean
