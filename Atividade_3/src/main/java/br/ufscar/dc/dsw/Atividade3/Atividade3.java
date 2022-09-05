@@ -1,4 +1,4 @@
-package br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros;
+package br.ufscar.dc.dsw.Atividade3;
 
 import java.sql.Date;
 import java.time.LocalDate;
