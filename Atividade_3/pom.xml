@@ -4,18 +4,17 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.2</version>
+		<version>2.7.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.ufscar.dc.dsw</groupId>
-	<artifactId>Atividade_Avaliativa_2-Compra_e_venda_de_carros</artifactId>
+	<artifactId>Atividade3</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Atividade_Avaliativa_2-Compra_e_venda_de_carros</name>
-	<description>Trabalho 2 - DSW - Compra e venda de carros</description>
+	<name>DSW-Atividade_3-Aplicacao_REST</name>
+	<description>Aplicação REST do leilão de Veículos</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -60,6 +59,15 @@
 		<dependency>
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf-spring5</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
 	</dependencies>
 
