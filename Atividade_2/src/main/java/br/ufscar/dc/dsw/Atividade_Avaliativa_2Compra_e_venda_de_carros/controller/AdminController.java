@@ -12,21 +12,33 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import java.util.List;
 
 import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.common.StoreDTO;
 import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.dao.ICostumerDAO;
+import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.dao.IPropostaDAO;
 import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.dao.IStoreDAO;
+import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.dao.IVeiculoDAO;
 import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.domain.Store;
+import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.domain.Veiculo;
 import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.domain.Costumer;
+import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.domain.Proposta;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
+    private static final String List = null;
     @Autowired
     private IStoreDAO storeDAO;
     @Autowired
     private ICostumerDAO costumerDAO;
+
+    @Autowired
+    private IVeiculoDAO veiculoDAO;
+
+    @Autowired
+    private IPropostaDAO propostaDAO;
 
     private String passEncoder(String pass) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -151,6 +163,22 @@ public class AdminController {
 
     @GetMapping("/loja/delete/{id}")
     public String deleteLoja(@PathVariable("id") long id) {
+        Store loja = this.storeDAO.getReferenceById(id);
+        List<Veiculo> veiculosLoja = this.veiculoDAO.findAllByLoja(loja);
+        int i = 0;
+
+        // Apaga todos os veículos da loja.
+        for (i = 0; i < veiculosLoja.size(); i++) {
+            int j = 0;
+            List<Proposta> propostasVeiculos = this.propostaDAO.findAllByVeiculo(veiculosLoja.get(i));
+
+            // Apaga todas as propostas de cada veículo.
+            for (j = 0; j < propostasVeiculos.size(); j++) {
+                this.propostaDAO.delete(propostasVeiculos.get(j));
+            }
+
+            this.veiculoDAO.delete(veiculosLoja.get(i));
+        }
         this.storeDAO.deleteById(id);
         return "redirect:/admin/";
     }

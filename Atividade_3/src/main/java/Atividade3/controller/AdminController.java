@@ -12,21 +12,33 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import java.util.List;
 
 import Atividade3.common.StoreDTO;
 import Atividade3.dao.ICostumerDAO;
+import Atividade3.dao.IPropostaDAO;
 import Atividade3.dao.IStoreDAO;
+import Atividade3.dao.IVeiculoDAO;
 import Atividade3.domain.Costumer;
+import Atividade3.domain.Proposta;
 import Atividade3.domain.Store;
+import Atividade3.domain.Veiculo;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
+    private static final String List = null;
     @Autowired
     private IStoreDAO storeDAO;
     @Autowired
     private ICostumerDAO costumerDAO;
+
+    @Autowired
+    private IVeiculoDAO veiculoDAO;
+
+    @Autowired
+    private IPropostaDAO propostaDAO;
 
     private String passEncoder(String pass) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -151,6 +163,22 @@ public class AdminController {
 
     @GetMapping("/loja/delete/{id}")
     public String deleteLoja(@PathVariable("id") long id) {
+        Store loja = this.storeDAO.getReferenceById(id);
+        List<Veiculo> veiculosLoja = this.veiculoDAO.findAllByLoja(loja);
+        int i = 0;
+
+        // Apaga todos os veículos da loja.
+        for (i = 0; i < veiculosLoja.size(); i++) {
+            int j = 0;
+            List<Proposta> propostasVeiculos = this.propostaDAO.findAllByVeiculo(veiculosLoja.get(i));
+
+            // Apaga todas as propostas de cada veículo.
+            for (j = 0; j < propostasVeiculos.size(); j++) {
+                this.propostaDAO.delete(propostasVeiculos.get(j));
+            }
+
+            this.veiculoDAO.delete(veiculosLoja.get(i));
+        }
         this.storeDAO.deleteById(id);
         return "redirect:/admin/";
     }
