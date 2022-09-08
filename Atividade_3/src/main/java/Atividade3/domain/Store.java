@@ -7,6 +7,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.json.simple.JSONObject;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import Atividade3.common.StoreDTO;
 
 @Entity
@@ -55,5 +58,26 @@ public class Store extends User {
         this.setNome(dto.getNome());
         this.setEmail(dto.getEmail());
         this.setSenha(dto.getSenha());
+    }
+
+    public void jsonDecode(JSONObject json) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        Object id = json.get("id");
+
+        if (id != null) {
+            if (id instanceof Integer) {
+                this.setId(((Integer) id).longValue());
+            } else {
+                this.setId((Long) id);
+            }
+        }
+
+        this.setCnpj((String) json.get("cnpj"));
+        this.setDescricao((String) json.get("descricao"));
+        this.setEmail((String) json.get("email"));
+        this.setNome((String) json.get("nome"));
+        this.setSenha(encoder.encode((String) json.get("senha")));
+        this.setTipo("ROLE_STORE");
+
     }
 }

@@ -19,22 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import Atividade3.dao.ICostumerDAO;
 import Atividade3.dao.IPropostaDAO;
-import Atividade3.dao.IStoreDAO;
-import Atividade3.dao.IVeiculoDAO;
+import Atividade3.domain.Costumer;
 import Atividade3.domain.Proposta;
-import Atividade3.domain.Store;
-import Atividade3.domain.Veiculo;
 
 @CrossOrigin
 @RestController
-public class RESTStoreController {
+public class RESTCostumerController {
 
     @Autowired
-    IStoreDAO storeDao;
-
-    @Autowired
-    IVeiculoDAO veiculoDAO;
+    ICostumerDAO costumerDAO;
 
     @Autowired
     IPropostaDAO propostaDAO;
@@ -47,24 +42,25 @@ public class RESTStoreController {
         }
     }
 
-    @GetMapping("/api/lojas")
-    public ResponseEntity<List<Store>> getLojas() {
-        List<Store> lojas = storeDao.findAll();
-        if (lojas.isEmpty()) {
+    @GetMapping("/api/clientes")
+    public ResponseEntity<List<Costumer>> getClientes() {
+        System.out.println("Entrou");
+        List<Costumer> clientes = costumerDAO.findAll();
+        if (clientes.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(lojas);
+        return ResponseEntity.ok(clientes);
     }
 
-    @PostMapping(path = "/api/lojas")
+    @PostMapping(path = "/api/clientes")
     @ResponseBody
-    public ResponseEntity<List<Store>> postLoja(@RequestBody JSONObject json) {
+    public ResponseEntity<List<Costumer>> postCliente(@RequestBody JSONObject json) {
         try {
             if (isJSONValid(json.toString())) {
-                Store loja = new Store();
-                loja.jsonDecode(json);
-                storeDao.save(loja);
-                return ResponseEntity.ok(storeDao.findAll());
+                Costumer cliente = new Costumer();
+                cliente.jsonDecode(json);
+                costumerDAO.save(cliente);
+                return ResponseEntity.ok(costumerDAO.findAll());
             } else {
                 return ResponseEntity.badRequest().body(null);
             }
@@ -74,25 +70,25 @@ public class RESTStoreController {
         }
     }
 
-    @GetMapping("/api/lojas/{id}")
-    public ResponseEntity<Store> getLoja(@PathVariable Long id) {
+    @GetMapping("/api/clientes/{id}")
+    public ResponseEntity<Costumer> getCliente(@PathVariable Long id) {
         try {
-            Store loja = storeDao.findById(id).get();
-            return ResponseEntity.ok(loja);
+            Costumer cliente = costumerDAO.findById(id).get();
+            return ResponseEntity.ok(cliente);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PutMapping("/api/lojas/{id}")
+    @PutMapping("/api/clientes/{id}")
     @ResponseBody
-    public ResponseEntity<Store> updateLoja(@PathVariable Long id, @RequestBody JSONObject json) {
+    public ResponseEntity<Costumer> updateCliente(@PathVariable Long id, @RequestBody JSONObject json) {
         try {
             if (isJSONValid(json.toString())) {
-                Store loja = storeDao.findById(id).get();
-                loja.jsonDecode(json);
-                storeDao.save(loja);
-                return ResponseEntity.ok(loja);
+                Costumer cliente = costumerDAO.findById(id).get();
+                cliente.jsonDecode(json);
+                costumerDAO.save(cliente);
+                return ResponseEntity.ok(cliente);
             } else {
                 return ResponseEntity.badRequest().body(null);
             }
@@ -102,29 +98,23 @@ public class RESTStoreController {
         }
     }
 
-    @DeleteMapping("/api/lojas/{id}")
-    public ResponseEntity<Boolean> deleteLoja(@PathVariable Long id) {
-        Store loja = storeDao.findById(id).get();
-        if (loja == null) {
+    @DeleteMapping("/api/clientes/{id}")
+    public ResponseEntity<Boolean> deleteCliente(@PathVariable Long id) {
+        Costumer usuario = costumerDAO.findById(id).get();
+        if (usuario == null) {
             return ResponseEntity.notFound().build();
         } else {
-            List<Veiculo> veiculosLoja = this.veiculoDAO.findAllByLoja(loja);
             int i = 0;
+            List<Proposta> propostasUsuario = propostaDAO.findAllByUsuario(usuario);
 
             // Apaga todos os veículos da loja.
-            for (i = 0; i < veiculosLoja.size(); i++) {
-                int j = 0;
-                List<Proposta> propostasVeiculos = this.propostaDAO.findAllByVeiculo(veiculosLoja.get(i));
-
-                // Apaga todas as propostas de cada veículo.
-                for (j = 0; j < propostasVeiculos.size(); j++) {
-                    this.propostaDAO.delete(propostasVeiculos.get(j));
-                }
-
-                this.veiculoDAO.delete(veiculosLoja.get(i));
+            for (i = 0; i < propostasUsuario.size(); i++) {
+                this.propostaDAO.delete(propostasUsuario.get(i));
             }
-            storeDao.delete(loja);
+
+            costumerDAO.delete(usuario);
             return ResponseEntity.noContent().build();
         }
     }
+
 }

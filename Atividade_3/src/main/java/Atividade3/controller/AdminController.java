@@ -28,7 +28,6 @@ import Atividade3.domain.Veiculo;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private static final String List = null;
     @Autowired
     private IStoreDAO storeDAO;
     @Autowired
@@ -103,6 +102,14 @@ public class AdminController {
 
     @GetMapping("/usuario/delete/{id}")
     public String deleteUser(@PathVariable("id") long id) {
+        Costumer usuario = costumerDAO.getReferenceById(id);
+        List<Proposta> propostasUsuario = this.propostaDAO.findAllByUsuario(usuario);
+        int i = 0;
+
+        // Apaga todos os veículos da loja.
+        for (i = 0; i < propostasUsuario.size(); i++) {
+            this.propostaDAO.delete(propostasUsuario.get(i));
+        }
         this.costumerDAO.deleteById(id);
         return "redirect:/admin/";
     }
