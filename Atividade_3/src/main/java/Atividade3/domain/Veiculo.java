@@ -16,6 +16,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.json.simple.JSONObject;
+
 @Entity
 @Table(name = "veiculo")
 public class Veiculo {
@@ -251,5 +253,24 @@ public class Veiculo {
     veiculo.setPath10(this.path10);
 
     return veiculo;
+  }
+
+  public void jsonDecode(JSONObject json) {
+
+    Object id = json.get("id");
+    if (id != null) {
+      if (id instanceof Integer) {
+        this.setId(((Integer) id).longValue());
+      } else {
+        this.setId(((Long) id));
+      }
+    }
+    this.setPlaca((String) json.get("placa"));
+    this.setModelo((String) json.get("modelo"));
+    this.setChassi((String) json.get("chassi"));
+    this.setAno((Integer) json.get("ano"));
+    this.setQuilometragem(((Double) json.get("quilometragem")).floatValue());
+    this.setDescricao((String) json.get("descricao"));
+    this.setValor(((Double) json.get("valor")).floatValue());
   }
 }

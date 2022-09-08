@@ -69,7 +69,7 @@ public class DswAtividade3AplicacaoRestApplication {
 			veic.setChassi("FGTW2022");
 			veic.setDescricao("O carro do ano");
 			veic.setLoja(loja);
-			veic.setModelo("Tiggo T Turbo");
+			veic.setModelo("TiggoX5");
 			veiculoDAO.save(veic);
 
 			Proposta prop = new Proposta();

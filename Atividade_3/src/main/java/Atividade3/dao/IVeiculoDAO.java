@@ -9,4 +9,6 @@ import Atividade3.domain.Veiculo;
 
 public interface IVeiculoDAO extends JpaRepository<Veiculo, Long> {
     public List<Veiculo> findAllByLoja(Store loja);
+
+    public List<Veiculo> findAllByModelo(String modelo);
 }
