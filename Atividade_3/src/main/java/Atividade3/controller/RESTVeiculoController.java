@@ -2,7 +2,6 @@ package Atividade3.controller;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import Atividade3.dao.IPropostaDAO;
 import Atividade3.dao.IStoreDAO;
-import Atividade3.dao.IUserDAO;
 import Atividade3.dao.IVeiculoDAO;
 import Atividade3.domain.Store;
 import Atividade3.domain.Veiculo;

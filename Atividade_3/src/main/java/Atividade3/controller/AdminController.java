@@ -28,7 +28,6 @@ import Atividade3.domain.Veiculo;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private static final String List = null;
     @Autowired
     private IStoreDAO storeDAO;
     @Autowired
