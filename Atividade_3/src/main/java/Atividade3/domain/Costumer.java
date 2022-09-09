@@ -1,8 +1,6 @@
 package Atividade3.domain;
 
 import java.sql.Date;
-import java.util.List;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
