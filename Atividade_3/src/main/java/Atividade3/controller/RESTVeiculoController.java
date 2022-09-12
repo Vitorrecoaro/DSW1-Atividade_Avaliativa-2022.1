@@ -41,12 +41,16 @@ public class RESTVeiculoController {
   // Exibi todos os veiculos de uma loja X
   @GetMapping(path = "/api/veiculos/lojas/{id}")
   public ResponseEntity<List<Veiculo>> lista(@PathVariable("id") Long id) {
-    Store loja = storeDAO.findById(id).get();
-    List<Veiculo> veiculos = this.iVeiculoDAO.findAllByLoja(loja);
-    if (veiculos.isEmpty()) {
-      return ResponseEntity.notFound().build();
+    try {
+      Store loja = storeDAO.findById(id).get();
+      List<Veiculo> veiculos = this.iVeiculoDAO.findAllByLoja(loja);
+      if (veiculos.isEmpty()) {
+        return ResponseEntity.notFound().build();
+      }
+      return ResponseEntity.ok(veiculos);
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
     }
-    return ResponseEntity.ok(veiculos);
   }
 
   // Cria um novo veiculo em uma loja X

@@ -100,20 +100,24 @@ public class RESTCostumerController {
 
     @DeleteMapping("/api/clientes/{id}")
     public ResponseEntity<Boolean> deleteCliente(@PathVariable Long id) {
-        Costumer usuario = costumerDAO.findById(id).get();
-        if (usuario == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            int i = 0;
-            List<Proposta> propostasUsuario = propostaDAO.findAllByUsuario(usuario);
+        try {
+            Costumer usuario = costumerDAO.findById(id).get();
+            if (usuario == null) {
+                return ResponseEntity.notFound().build();
+            } else {
+                int i = 0;
+                List<Proposta> propostasUsuario = propostaDAO.findAllByUsuario(usuario);
 
-            // Apaga todos os veículos da loja.
-            for (i = 0; i < propostasUsuario.size(); i++) {
-                this.propostaDAO.delete(propostasUsuario.get(i));
+                // Apaga todos os veículos da loja.
+                for (i = 0; i < propostasUsuario.size(); i++) {
+                    this.propostaDAO.delete(propostasUsuario.get(i));
+                }
+
+                costumerDAO.delete(usuario);
+                return ResponseEntity.noContent().build();
             }
-
-            costumerDAO.delete(usuario);
-            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
         }
     }
 

@@ -104,27 +104,33 @@ public class RESTStoreController {
 
     @DeleteMapping("/api/lojas/{id}")
     public ResponseEntity<Boolean> deleteLoja(@PathVariable Long id) {
-        Store loja = storeDao.findById(id).get();
-        if (loja == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            List<Veiculo> veiculosLoja = this.veiculoDAO.findAllByLoja(loja);
-            int i = 0;
+        try {
 
-            // Apaga todos os veículos da loja.
-            for (i = 0; i < veiculosLoja.size(); i++) {
-                int j = 0;
-                List<Proposta> propostasVeiculos = this.propostaDAO.findAllByVeiculo(veiculosLoja.get(i));
+            Store loja = storeDao.findById(id).get();
+            if (loja == null) {
+                return ResponseEntity.notFound().build();
+            } else {
+                List<Veiculo> veiculosLoja = this.veiculoDAO.findAllByLoja(loja);
+                int i = 0;
 
-                // Apaga todas as propostas de cada veículo.
-                for (j = 0; j < propostasVeiculos.size(); j++) {
-                    this.propostaDAO.delete(propostasVeiculos.get(j));
+                // Apaga todos os veículos da loja.
+                for (i = 0; i < veiculosLoja.size(); i++) {
+                    int j = 0;
+                    List<Proposta> propostasVeiculos = this.propostaDAO.findAllByVeiculo(veiculosLoja.get(i));
+
+                    // Apaga todas as propostas de cada veículo.
+                    for (j = 0; j < propostasVeiculos.size(); j++) {
+                        this.propostaDAO.delete(propostasVeiculos.get(j));
+                    }
+
+                    this.veiculoDAO.delete(veiculosLoja.get(i));
                 }
-
-                this.veiculoDAO.delete(veiculosLoja.get(i));
+                storeDao.delete(loja);
+                return ResponseEntity.noContent().build();
             }
-            storeDao.delete(loja);
-            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
+
         }
     }
 }

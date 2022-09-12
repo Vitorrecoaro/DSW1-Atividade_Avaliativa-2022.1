@@ -3,6 +3,7 @@ package Atividade3.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,23 +31,31 @@ public class RESTPropostaController {
   // Exibi todas as Propostas de um veiculo
   @GetMapping("/api/propostas/veiculos/{id}")
   public ResponseEntity<List<Proposta>> listaPropPorVeic(@PathVariable Long id) {
-    Veiculo veiculo = iVeiculoDAO.findById(id).get();
-    List<Proposta> propostas = this.propostaDAO.findAllByVeiculo(veiculo);
-    if (propostas.isEmpty()) {
-      return ResponseEntity.notFound().build();
+    try {
+      Veiculo veiculo = iVeiculoDAO.findById(id).get();
+      List<Proposta> propostas = this.propostaDAO.findAllByVeiculo(veiculo);
+      if (propostas.isEmpty()) {
+        return ResponseEntity.notFound().build();
+      }
+      return ResponseEntity.ok(propostas);
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
     }
-    return ResponseEntity.ok(propostas);
   }
 
   // Exibi todas as Propostas de um cliente
   @GetMapping("/api/propostas/clientes/{id}")
   public ResponseEntity<List<Proposta>> listaPropPorCliente(@PathVariable Long id) {
-    Costumer costumer = costumerDAO.findById(id).get();
-    List<Proposta> propostas = this.propostaDAO.findAllByUsuario(costumer);
-    if (propostas.isEmpty()) {
-      return ResponseEntity.notFound().build();
+    try {
+      Costumer costumer = costumerDAO.findById(id).get();
+      List<Proposta> propostas = this.propostaDAO.findAllByUsuario(costumer);
+      if (propostas.isEmpty()) {
+        return ResponseEntity.notFound().build();
+      }
+      return ResponseEntity.ok(propostas);
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
     }
-    return ResponseEntity.ok(propostas);
   }
 
 }
