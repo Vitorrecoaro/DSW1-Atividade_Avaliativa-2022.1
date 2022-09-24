@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.dao.IUserDAO;
@@ -33,6 +34,24 @@ public class IndexController {
             mv.addObject("typeUser", user.getTipo());
         }
         this.carros = iVeiculoDAO.findAll();
+        mv.addObject("carros", carros);
+        return mv;
+    }
+
+    @GetMapping("/search")
+    public ModelAndView searchModel(Model model, Authentication auth, @RequestParam String modelo) {
+        ModelAndView mv = new ModelAndView("redirect:/");
+        if (auth != null) {
+            User user = userDAO.findByEmail(auth.getName());
+            mv.addObject("typeUser", user.getTipo());
+        }
+        if (modelo != null && modelo != "") {
+            this.carros = iVeiculoDAO.findAllByModelo(modelo);
+            model.addAttribute("modelo", modelo);
+            mv.setViewName("index");
+        } else {
+            this.carros = iVeiculoDAO.findAll();
+        }
         mv.addObject("carros", carros);
         return mv;
     }

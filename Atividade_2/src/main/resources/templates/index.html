@@ -32,6 +32,15 @@
             border-radius: 10px;
             width: 75%;
         }
+
+        .centerForm {
+            display: flex;
+            justify-content: center;
+        }
+
+        .centerForm input {
+            margin: 0px 16px;
+        }
     </style>
 </head>
 
@@ -55,6 +64,20 @@
     <div class="header text-center">
         <h2>Seja bem-vindo <span></span>!</h2>
         <h3>Compre aqui seus veículos no menor preço do mercado.</h3>
+    </div>
+
+    <hr>
+
+    <div class="header text-center">
+        <h3>Digite aqui o modelo de carro que procura:</h3>
+        <form method="get" th:action="@{/search}">
+            <div class="centerForm">
+                <label for="modelo">Modelo:</label>
+                <input type="text" name="modelo" th:value="${modelo}"
+                    placeholder="Digite aqui um modelo para procurar" />
+                <button type="submit">Procurar</button>
+            </div>
+        </form>
     </div>
 
     <div class="container">
@@ -93,12 +116,18 @@
         </div>
     </div>
 
+    <br>
+
+
     <h1 align="center">Veículos Disponíveis</h1>
 
     <div th:if="${carros.size() > 0}">
         <div th:each="carro : ${carros}">
             <li>
                 <img th:src="${carro.path}" alt="Carro 1" style="width: 10%;">
+            </li>
+            <li>
+                <b>Modelo:</b> <span th:text="${carro.modelo}"></span>
             </li>
             <li>
                 <b>Descrição:</b> <span th:text="${carro.descricao}"></span>

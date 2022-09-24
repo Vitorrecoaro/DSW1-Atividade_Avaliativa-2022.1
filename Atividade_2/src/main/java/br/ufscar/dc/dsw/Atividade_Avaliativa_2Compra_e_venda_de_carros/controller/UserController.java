@@ -67,4 +67,22 @@ public class UserController {
 
         return "redirect:/usuario";
     }
+
+    @GetMapping("/responderProposta/{id}")
+    public ModelAndView formRespostaLoja(@PathVariable("id") Long id, Proposta proposta) {
+        ModelAndView mv = new ModelAndView("user/formContraProposta");
+        Proposta prop = propostaDAO.getReferenceById(id);
+        mv.addObject("proposta", prop);
+        return mv;
+    }
+
+    @PostMapping("/responderProposta/{id}")
+    public ModelAndView atualizaProposta(@PathVariable("id") Long id, Proposta proposta, String status) {
+        ModelAndView mv = new ModelAndView("redirect:/usuario");
+        Proposta prop = propostaDAO.getReferenceById(id);
+        prop.setStatus(status);
+        System.out.println(prop);
+        propostaDAO.save(prop);
+        return mv;
+    }
 }

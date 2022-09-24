@@ -29,6 +29,7 @@
           <th scope="col">Valor</th>
           <th scope="col">Condições de pagamento</th>
           <th scope="col">Status</th>
+          <th scope="col">Opções</th>
         </tr>
       </thead>
       <tbody>
@@ -37,6 +38,12 @@
           <td th:text="${proposta.preco}"></td>
           <td th:text="${proposta.modo_de_pagamento}"></td>
           <td th:text="${proposta.status}"></td>
+          <td>
+            <a th:if="${proposta.status == 'CONTRAPROPOSTA'}"
+              th:href="@{/usuario/responderProposta/{id} (id = ${proposta.id})}">
+              Responder contra proposta
+            </a>
+          </td>
         </tr>
       </tbody>
     </table>

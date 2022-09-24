@@ -43,8 +43,16 @@
                     <td th:text="${proposta.preco}"></td>
                     <td th:text="${proposta.modo_de_pagamento}"></td>
                     <td th:text="${proposta.status}"></td>
-                    <td> <a th:if="${proposta.status == 'ABERTO'}"
-                            th:href="@{/veiculos/proposta/{id} (id = ${proposta.id})}"> Responder proposta </a></td>
+                    <td>
+                        <a th:if="${proposta.status == 'ABERTO'}"
+                            th:href="@{/veiculos/proposta/{id} (id = ${proposta.id})}">
+                            Responder proposta
+                        </a>
+                        <a th:if="${proposta.status == 'NÃO ACEITO'}"
+                            th:href="@{/veiculos/contraProposta/{id} (id = ${proposta.id})}">
+                            Fazer contra proposta
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>

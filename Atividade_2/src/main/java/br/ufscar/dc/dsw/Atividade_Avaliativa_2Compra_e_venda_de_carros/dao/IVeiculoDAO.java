@@ -9,4 +9,6 @@ import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.domain.Ve
 
 public interface IVeiculoDAO extends JpaRepository<Veiculo, Long> {
     public List<Veiculo> findAllByLoja(Store loja);
+
+    public List<Veiculo> findAllByModelo(String modelo);
 }

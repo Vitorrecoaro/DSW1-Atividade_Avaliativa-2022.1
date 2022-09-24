@@ -277,4 +277,25 @@ public class StoreController {
         return mv;
     }
 
+    @GetMapping("/contraProposta/{id}")
+    public ModelAndView formContraPropostaLoja(@PathVariable("id") Long id, Proposta proposta) {
+        ModelAndView mv = new ModelAndView("proposta/contraProposta");
+        Proposta prop = propostaDAO.getReferenceById(id);
+        mv.addObject("proposta", prop);
+        return mv;
+    }
+
+    @PostMapping("/contraProposta/{id}")
+    public ModelAndView contraProposta(@PathVariable("id") Long id, Proposta proposta, Long preco,
+            String modo_de_pagamento) {
+
+        ModelAndView mv = new ModelAndView("redirect:/veiculos/" + id + "/propostas");
+        Proposta prop = propostaDAO.getReferenceById(id);
+        prop.setPreco(preco);
+        prop.setModo_de_pagamento(modo_de_pagamento);
+        prop.setStatus("CONTRAPROPOSTA");
+        propostaDAO.save(prop);
+        return mv;
+    }
+
 }

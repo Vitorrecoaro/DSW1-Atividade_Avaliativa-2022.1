@@ -23,16 +23,19 @@
     <title>Responder Proposta</title>
 </head>
 
-<header th:replace="~{fragmentos::navigationLoja}"></header>
 
 <body>
+    <header th:replace="~{fragmentos::navigationUser}">
+    </header>
+
 
     <body>
 
         <div th:if="${error}" th:replace="~{fragmentos::errors(${error})}"></div>
         <div class="container col-lg-6">
             <h2>Proposta</h2>
-            <form class="form-horizontal" method="POST" th:action="@{/veiculos/proposta/{id} (id = ${proposta.id})}">
+            <form class="form-horizontal" method="POST"
+                th:action="@{/usuario/responderProposta/{id} (id = ${proposta.id})}">
 
                 <div class="form-group">
                     <label for="proposta" class="control-label col-sm-2">Modelo do carro:</label>
@@ -45,8 +48,7 @@
                 <div class="form-group">
                     <label for="proposta" class="control-label col-sm-2">Valor da proposta:</label>
                     <div class="col-sm-10">
-                        <input th:if="${proposta.status != 'NÃO ACEITO'}" disabled type="text"
-                            th:value="${proposta.preco}" placeholder="20000,00" name="preco"
+                        <input disabled type="text" th:value="${proposta.preco}" placeholder="20000,00" name="preco"
                             onkeypress="if (!isNaN(String.fromCharCode(window.event.keyCode))) return true; else return false;" />
                     </div>
                 </div>
@@ -54,8 +56,8 @@
                 <div class="form-group">
                     <label for="condicoes" class="control-label col-sm-2">Condições de pagamento:</label>
                     <div class="col-sm-10">
-                        <select th:if="${proposta.status != 'NÃO ACEITO'}" disabled id="condicoes"
-                            th:value="${proposta.modo_de_pagamento}" name="modo_de_pagamento">
+                        <select disabled id="condicoes" th:value="${proposta.modo_de_pagamento}"
+                            name="modo_de_pagamento">
                             <option value="Vista">À vista</option>
                             <option value="Parcelado">Parcelado</option>
                         </select>
@@ -65,16 +67,16 @@
                 <div class="form-group">
                     <label for="condicoes" class="control-label col-sm-2">Estado:</label>
                     <div class="col-sm-10">
-                        <select th:if="${proposta.status != 'NÃO ACEITO'}" required id="status" name="status">
-                            <option value="ACEITO">Aceitar proposta</option>
-                            <option value="NÃO ACEITO">Não aceitar proposta</option>
+                        <select required id="status" name="status">
+                            <option value="CONTRAPROPOSTA ACEITA">Aceitar proposta</option>
+                            <option value="CONTRAPROPOSTA NÃO ACEITA">Não aceitar proposta</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button th:if="${proposta.status != 'NÃO ACEITO'}" type="submit">
+                        <button type="submit">
                             <span class="btn btn-primary" id="botao">
                             </span>
                             Responder proposta
