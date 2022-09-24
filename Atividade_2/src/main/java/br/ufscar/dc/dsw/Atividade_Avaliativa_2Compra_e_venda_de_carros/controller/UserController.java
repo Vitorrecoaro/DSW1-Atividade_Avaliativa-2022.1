@@ -2,7 +2,6 @@ package br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.controll
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

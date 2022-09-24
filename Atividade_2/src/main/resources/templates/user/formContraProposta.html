@@ -10,7 +10,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
         .container {
-            margin-top: -1.5%;
             margin-left: 25%;
             box-shadow: 0px 0px 15px rgb(0 0 0 / 35%);
             border-radius: 10px;
@@ -56,11 +55,8 @@
                 <div class="form-group">
                     <label for="condicoes" class="control-label col-sm-2">Condições de pagamento:</label>
                     <div class="col-sm-10">
-                        <select disabled id="condicoes" th:value="${proposta.modo_de_pagamento}"
-                            name="modo_de_pagamento">
-                            <option value="Vista">À vista</option>
-                            <option value="Parcelado">Parcelado</option>
-                        </select>
+                        <input disabled id="condicoes" th:value="${proposta.modo_de_pagamento}"
+                            name="modo_de_pagamento" />
                     </div>
                 </div>
 

@@ -28,7 +28,6 @@ import br.ufscar.dc.dsw.Atividade_Avaliativa_2Compra_e_venda_de_carros.domain.Pr
 @RequestMapping("/admin")
 public class AdminController {
 
-    private static final String List = null;
     @Autowired
     private IStoreDAO storeDAO;
     @Autowired
