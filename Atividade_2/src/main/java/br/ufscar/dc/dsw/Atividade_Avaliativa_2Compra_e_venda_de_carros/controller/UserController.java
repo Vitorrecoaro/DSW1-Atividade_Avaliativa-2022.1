@@ -69,19 +69,26 @@ public class UserController {
 
     @GetMapping("/responderProposta/{id}")
     public ModelAndView formRespostaLoja(@PathVariable("id") Long id, Proposta proposta) {
-        ModelAndView mv = new ModelAndView("user/formContraProposta");
+        ModelAndView mv = new ModelAndView();
         Proposta prop = propostaDAO.getReferenceById(id);
-        mv.addObject("proposta", prop);
+        if (prop.getStatus().equals("CONTRAPROPOSTA")) {
+            mv.setViewName("user/formContraProposta");
+            mv.addObject("proposta", prop);
+        } else {
+            mv.setViewName("redirect:/usuario");
+        }
         return mv;
     }
 
     @PostMapping("/responderProposta/{id}")
     public ModelAndView atualizaProposta(@PathVariable("id") Long id, Proposta proposta, String status) {
-        ModelAndView mv = new ModelAndView("redirect:/usuario");
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/usuario");
         Proposta prop = propostaDAO.getReferenceById(id);
-        prop.setStatus(status);
-        System.out.println(prop);
-        propostaDAO.save(prop);
+        if (prop.getStatus().equals("CONTRAPROPOSTA")) {
+            prop.setStatus(status);
+            propostaDAO.save(prop);
+        }
         return mv;
     }
 }
