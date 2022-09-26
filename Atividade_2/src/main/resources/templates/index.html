@@ -41,6 +41,22 @@
         .centerForm input {
             margin: 0px 16px;
         }
+
+        .carsContainer {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .carContainer {
+            margin: 8px;
+            box-shadow: 0px 0px 15px rgb(0 0 0 / 35%);
+        }
+
+        .propostaBtn {
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 
@@ -121,11 +137,15 @@
 
     <h1 align="center">Veículos Disponíveis</h1>
 
-    <div th:if="${carros.size() > 0}">
-        <div th:each="carro : ${carros}">
-            <li>
-                <img th:src="${carro.path}" alt="Carro 1" style="width: 10%;">
-            </li>
+    <div class="carsContainer" th:if="${carros.size() > 0}">
+        <div class="carContainer" th:each="carro : ${carros}">
+            <table>
+                <tr>
+                    <td>
+                        <img th:src="${carro.path}" alt="Carro 1" style="width: 400px; height: 300px;">
+                    </td>
+                </tr>
+            </table>
             <li>
                 <b>Modelo:</b> <span th:text="${carro.modelo}"></span>
             </li>
@@ -139,8 +159,9 @@
                 <b>Valor do Veiculo:</b> <span th:text="${carro.valor}"></span>
             </li>
             </ul>
+            <br>
             <div class="card-footer">
-                <form th:action="@{/usuario/proposta/{idVeic} (idVeic = ${carro.id})}" method="get">
+                <form class="propostaBtn" th:action="@{/usuario/proposta/{idVeic} (idVeic = ${carro.id})}" method="get">
                     <button class="btn" type="submit">Fazer proposta</a>
                 </form>
             </div>
