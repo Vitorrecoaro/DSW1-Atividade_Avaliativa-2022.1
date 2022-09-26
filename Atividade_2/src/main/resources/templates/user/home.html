@@ -34,7 +34,7 @@
       </thead>
       <tbody>
         <tr th:each="proposta : ${propostas}">
-          <td th:text="${proposta.id}"></td>
+          <td th:text="${proposta.veiculo.modelo}"></td>
           <td th:text="${proposta.preco}"></td>
           <td th:text="${proposta.modo_de_pagamento}"></td>
           <td th:text="${proposta.status}"></td>

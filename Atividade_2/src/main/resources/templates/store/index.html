@@ -21,6 +21,7 @@
       <thead>
         <tr class="info">
           <th scope="col">ID</th>
+          <th scope="col">Modelo</th>
           <th scope="col">Placa</th>
           <th scope="col">Ano</th>
           <th scope="col">Quilometragem</th>
@@ -33,6 +34,7 @@
       <tbody>
         <tr th:each="veiculo : ${veiculos}">
           <th scope="row" th:text="${veiculo.getId()}">ID</th>
+          <td th:text="${veiculo.modelo}">Modelo</td>
           <td th:text="${veiculo.placa}">Placa</td>
           <td th:text="${veiculo.ano}">Ano</td>
           <td th:text="${veiculo.quilometragem}">Quilometragem</td>
